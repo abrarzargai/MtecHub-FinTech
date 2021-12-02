@@ -5,7 +5,6 @@ const AdminSchema = new mongoose.Schema({
   Email: {
     type: String,
     required: [true, "Please Enter your email"],
-    unique: true,
     lowercase: true,
   },
   Password: {

@@ -5,11 +5,14 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
+const {urlencoded} = require('express');
 
 const userRoutes = require('./api/api');
 const globalErrHandler = require('./utils/errorController');
 const AppError = require('./utils/appError');
 const app = express();
+
+app.use(urlencoded({extended:true}));
 
 // Allow Cross-Origin requests
 app.use(cors());

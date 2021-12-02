@@ -38,8 +38,25 @@ exports.StripeValidation = [
 
 //Add Agency Validation
 exports.AddAgencyValidation = [
-	check('Label').matches(/[0-9]{5}[a-zA-Z]{20}/)
-	.withMessage("Label must be 5 digits numbers + 20 digit strings i.e 12345XXXXXXXXXXXXXXXXXXXX"),	
+	check('Code').matches(/[0-9]{5}/)
+	.withMessage("Code must be 5 digits numbers"),
+	check('Label').matches(/[a-zA-Z]{20}/)
+		.withMessage("Label must be  20 characters"),	
+	
+];
+
+//Add Product Validation
+exports.AddProductValidation = [
+	check('Code').matches(/[0-9]{5}/)
+	.withMessage("Code must be 5 digits numbers"),
+	check('Label').matches(/[a-zA-Z]{20}/)
+		.withMessage("Label must be  20 characters"),
+	check('Duration')
+		.notEmpty()
+		.withMessage("Must Enter Duration"),
+	check('Status')
+		.notEmpty()
+		.withMessage("Must Enter Status"),		
 	
 ];
 

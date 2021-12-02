@@ -16,14 +16,16 @@ var upload = multer({ storage: storage })
 
 route.post('/image', upload.single('image'), async (req, res) => {
 
+
     const file = req.file;
     console.log("===>", req.file)
+   
     if (!file) {
         const error = new Error('Please upload a file')
         console.log('no-file')
         return next(error)
     }
-    res.json({ Status: 'Image Uploaded', Imagename: req.file.filename, Imagepath: "/upload/" + req.file.filename });
+     res.json({ Status: 'Image Uploaded', Imagename: req.file.filename, Imagepath: "/upload/" + req.file.filename });
 });
 
 

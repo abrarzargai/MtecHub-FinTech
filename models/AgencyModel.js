@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
 
 const AgencySchema = new mongoose.Schema({
+  Code: {
+    type: Number,
+    required: true
+  },
   Label: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
   CashRegister: {
     type: mongoose.Types.ObjectId,

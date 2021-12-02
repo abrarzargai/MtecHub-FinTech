@@ -11,11 +11,11 @@ This is a basic project structure to help you to start building your own RESTful
 -password (string)
 
 ## Agency --x--
--CashRegister ['debit','credit] (Enum)
+-CashRegister (MongodbID-ref to CashRegister-single)
 -Products [] (Array of mongoseID) refo product--------------
 -Operator (MongodbID-ref to Operator-single)--------------
--Label (string) 5 digits numbers+20 digits string {/[0-9]{5}-[a-zA-Z][0-9]{20}/}
--
+-Label (string) 20 digits string 
+-Code (Number) 5 digits numbers
 
 ## CashRegister --x--
 -AccountNo (string)  20 alpha {/[a-zA-Z][0-9]{20}/}
@@ -45,8 +45,12 @@ This is a basic project structure to help you to start building your own RESTful
 -transaction [] (Array of mongoseID-ref to transaction)------------------
 -CashRegister (MongoId- ref to Cash Register)---------------
 
-## products
--Name (string)
+## products --x--
+-Label (string) 20 alphanumberic 
+-Code (Number) 5 digits numbers
+-Duration  ['month','bimonthly','quarter','semester','annual'] (Enum)
+- status ['enabled','disabled']
+
 ## transaction
 -Amount (Numbers)
 -Label (string)  20 alpha {/[a-zA-Z]{20}/}
@@ -54,6 +58,7 @@ This is a basic project structure to help you to start building your own RESTful
 -Operation Type ['debit'.'credit']
 -status ["verified","pending","rejected"] (enum) can deal by admin
 -comments (string) admin can leave comment why it got canceled/rejected
+
 -----------------------------------------------------------------------
 ## ******* Apis ********
 ## Admin

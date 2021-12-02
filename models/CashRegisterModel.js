@@ -4,7 +4,6 @@ const CashRegisterSchema = new mongoose.Schema({
     AccountNo: {
         type: String,
         required: true,
-        unique: true,
     },
     Duration: {
         type: String,
