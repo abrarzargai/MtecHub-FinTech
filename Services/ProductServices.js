@@ -32,12 +32,12 @@ exports.Add = catchAsync(async (req, res, next) => {
 //Update
 exports.Update = catchAsync(async (req, res, next) => {
 
-    const Data = await ProductsModel.find({ Label: req.body.Label })
-  
+    const Data = await ProductsModel.find({ "_id": req.body.Product  })
+  console.log(Data)
     if (Data[0]) {
        
 
-            const Record = await ProductsModel.update({ Label: req.body.Label }, { ...req.body });
+            const Record = await ProductsModel.updateOne({ "_id": req.body.Product }, { ...req.body });
 
             if (Record.nModified > 0) {
                 return res.status(200).json({
@@ -51,7 +51,7 @@ exports.Update = catchAsync(async (req, res, next) => {
        
     }
     else {
-        return next(new Error('Product with this Label Not Found '))
+        return next(new Error('Product Not Found '))
 
     }
 })

@@ -2,10 +2,7 @@
 This is a basic project structure to help you to start building your own RESTful web APIs (for Android, IOS, or JavaScript frameworks) using Express framework and MongoDB with a good structure practices based on clean MVC Architecture.
 
 -------------------------------Project FinTech----------------------------------------
-# Node.js, Express and MongoDB Project Structure 
-This is a basic project structure to help you to start building your own RESTful web APIs (for Android, IOS, or JavaScript frameworks) using Express framework and MongoDB with a good structure practices based on clean MVC Architecture.
 
------------------------------------------------------------------------
 ## Admin --x--
 -email (string)
 -password (string)
@@ -35,16 +32,17 @@ This is a basic project structure to help you to start building your own RESTful
 -dob (Date)
 -city (string)
 -email (string)
+-password(string)default-1234
 -phone (string)
--sex ['male,'female'] (enum)
--pass (string) default-1234
+-Gender ['male,'female'] (enum)
 -role ['customer','collector']
 -NationalId (string) image-url
 -expiry date (Date)
 -subscriptions [] (Array of mongoseID-ref to product)------------------
 -transaction [] (Array of mongoseID-ref to transaction)------------------
 -CashRegister (MongoId- ref to Cash Register)---------------
-
+-Agency (mongoid of agency)
+-operator(mongodb id)
 ## products --x--
 -Label (string) 20 alphanumberic 
 -Code (Number) 5 digits numbers
@@ -73,9 +71,8 @@ This is a basic project structure to help you to start building your own RESTful
 -can subscribe to the product of member
 
 ## Member
--can see listed if subscribe products
+-can see listed of subscribe products
 -member cash register will be created upon subscription
-
--
--
+-members are also part of agencies
+-can view his info,transcation and collection calender
 

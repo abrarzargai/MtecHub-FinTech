@@ -74,7 +74,7 @@ exports.UpdatePassword = catchAsync(async (req, res, next) => {
     if (User[0]) {
         if (await argon2.verify(User[0].Password, req.body.OldPassword)) {
 
-            const Record = await AdminModel.updateOne({ Email: req.body.Email }, { Password: req.body.NewPassword });
+            const Record = await AdminModel.update({ Email: req.body.Email }, { Password: req.body.NewPassword });
           
             if (Record.nModified > 0) {
                 return res.status(200).json({

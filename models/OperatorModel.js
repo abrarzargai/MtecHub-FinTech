@@ -28,15 +28,11 @@ const OperatorSchema = new mongoose.Schema({
         type: String,
         enum: ['male', 'female']
     },
-    Role: {
-        type: String,
-        enum: ['customer', 'collector']
-    },
     NationalId: {
         type: String
     },
     ExpiryDate: {
-        type: String
+        type: Date
     },
     Member: [{
         type: mongoose.Types.ObjectId,
@@ -57,6 +53,7 @@ OperatorSchema.pre('save', async function (next) {
 })
 
 OperatorSchema.pre('updateOne', async function (next) {
+    console.log("update", this.getUpdate())
     this.getUpdate().Password = await argon2.hash(this.getUpdate().Password);
     next();
 })

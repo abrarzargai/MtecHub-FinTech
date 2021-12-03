@@ -24,10 +24,6 @@ const MemberSchema = new mongoose.Schema({
     PhoneNumber: {
         type: String
     },
-    Gender:{
-        type: String,
-        enum:['male', 'female']
-    },
     Role: {
         type: String,
         enum: ['customer', 'collector']
@@ -38,17 +34,13 @@ const MemberSchema = new mongoose.Schema({
     ExpiryDate:{
         type: String
     },
-    CashRegister: {
+    CashRegister: [{
         type: mongoose.Types.ObjectId,
         ref: 'CashRegister',
-    },
+    }],
     Subscriptions: [{
         type: mongoose.Types.ObjectId,
         ref: 'Product',
-    }],
-    Transaction: [{
-        type: mongoose.Types.ObjectId,
-        ref: 'Transaction',
     }],
     Operator: {
         type: mongoose.Types.ObjectId,
@@ -69,6 +61,7 @@ MemberSchema.pre('save', async function (next) {
 })
 
 MemberSchema.pre('updateOne', async function (next) {
+    console.log("update", this.getUpdate())
     this.getUpdate().Password = await argon2.hash(this.getUpdate().Password);
     next();
 })

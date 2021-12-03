@@ -6,7 +6,7 @@ const middleware = require('../../utils/Middleware_validation')
 
 
 route.post('/Add', middleware.AddProductValidation, middleware.validationFunction , ProductServices.Add);
-route.post('/Edit', ProductServices.Update);
+route.post('/update', ProductServices.Update);
 route.get('/GetAll', ProductServices.GetAll);
 
 module.exports = route;
