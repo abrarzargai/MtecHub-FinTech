@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 
 const CashRegisterSchema = new mongoose.Schema({
-    AccountNo: {
-        type: String,
+    Code: {
+        type: Number,
         required: true,
     },
-    Duration: {
+     Label: {
         type: String,
-        enum: ['month', 'bimonthly', 'quarter', 'semester', 'annual'],
         required: true,
     },
     Status: {
@@ -20,13 +19,31 @@ const CashRegisterSchema = new mongoose.Schema({
         enum: ['eur', 'xof'],
         required: true,
     },
-    Digits: {
-        type: String,
-        required: true,
+    Operator: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Operator',
     },
-    Balance:{
+    Product: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Product',
+    },
+    Agency: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Agency',
+    },
+    TransactionType: {
+        type: String,
+        enum: ['debit', 'credit'],
+    },
+    Amount:{
         type: Number,
         default: 0.00
+    },
+    CancelByAdmin:{
+        type:Boolean
+    },
+    CommentByAdmin:{
+        type:String
     }
 },
     {

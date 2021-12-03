@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const argon2 = require('argon2');
 
 const MemberSchema = new mongoose.Schema({
     FirstName: {
@@ -62,6 +63,15 @@ const MemberSchema = new mongoose.Schema({
         timestamps: true,
     });
 
+MemberSchema.pre('save', async function (next) {
+    this.Password = await argon2.hash(this.Password);
+    next();
+})
+
+MemberSchema.pre('updateOne', async function (next) {
+    this.getUpdate().Password = await argon2.hash(this.getUpdate().Password);
+    next();
+})
 
 const Member = mongoose.model("Member", MemberSchema);
 module.exports = Member;

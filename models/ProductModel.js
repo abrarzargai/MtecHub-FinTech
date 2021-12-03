@@ -19,6 +19,7 @@ const ProductSchema = new mongoose.Schema({
         enum: ['enabled', 'disabled'],
         required: true,
     },
+    
 },
     {
         timestamps: true,

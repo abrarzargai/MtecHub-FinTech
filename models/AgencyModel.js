@@ -20,6 +20,10 @@ const AgencySchema = new mongoose.Schema({
   Operator:[{
     type: mongoose.Types.ObjectId,
     ref: 'Operator',
+  }],
+   Member:[{
+    type: mongoose.Types.ObjectId,
+    ref: 'Member',
   }]
 },
   {

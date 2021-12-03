@@ -37,15 +37,11 @@ const OperatorSchema = new mongoose.Schema({
     },
     ExpiryDate: {
         type: String
-    }
+    },
     Member: [{
         type: mongoose.Types.ObjectId,
         ref: 'Member',
     }],
-    Operator: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Operator',
-    },
     Agency: {
         type: mongoose.Types.ObjectId,
         ref: 'Agency',

@@ -1,4 +1,4 @@
-const CashRegisterModel = require('../models/CashRegisterModel');
+const CashRegisterModel = require('../models/CashRegisterModelMember');
 const catchAsync = require('../utils/catchAsync');
 
 
