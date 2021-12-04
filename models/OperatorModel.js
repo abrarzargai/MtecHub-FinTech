@@ -34,6 +34,9 @@ const OperatorSchema = new mongoose.Schema({
     NationalId: {
         type: String
     },
+    Image: {
+        type: String
+    },
     ExpiryDate: {
         type: Date
     },

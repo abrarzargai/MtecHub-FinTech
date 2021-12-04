@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
 
 const CashRegisterAgencySchema = new mongoose.Schema({
+    Code: {
+        type: Number,
+    },
+    Label: {
+        type: String,
+    },
+    Status: {
+        type: String,
+    },
     Customer: {
         type: mongoose.Types.ObjectId,
         ref: 'Member',

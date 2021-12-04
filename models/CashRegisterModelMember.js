@@ -3,21 +3,17 @@ const mongoose = require("mongoose");
 const CashRegisterSchema = new mongoose.Schema({
     Code: {
         type: Number,
-        required: true,
     },
      Label: {
         type: String,
-        required: true,
     },
     Status: {
         type: String,
         enum: ['enabled', 'disabled'],
-        required: true,
     },
     Currency: {
         type: String,
         enum: ['eur', 'xof'],
-        required: true,
     },
     Operator: {
         type: mongoose.Types.ObjectId,

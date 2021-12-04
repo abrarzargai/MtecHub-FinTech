@@ -1,6 +1,7 @@
 const ProductsModel = require('../models/ProductModel');
 const catchAsync = require('../utils/catchAsync');
 
+const AgencyModel = require('../models/AgencyModel');
 /***************Services************/
 
 //Add
@@ -15,6 +16,13 @@ exports.Add = catchAsync(async (req, res, next) => {
             throw new Error('Error! Product cannot be created');
         }
         else {
+
+            const responseAgency = await AgencyModel.find({ "_id": req.body.Agency })
+            console.log(responseAgency)
+            responseAgency[0].Products.push(Record._id)
+            const saveAgency = await responseAgency[0].save()
+            console.log("saveAgency", saveAgency)
+
             return res.status(201).json({
                 success: true, message: "New Product Added Successfully", Record
             })
@@ -32,23 +40,23 @@ exports.Add = catchAsync(async (req, res, next) => {
 //Update
 exports.Update = catchAsync(async (req, res, next) => {
 
-    const Data = await ProductsModel.find({ "_id": req.body.Product  })
-  console.log(Data)
+    const Data = await ProductsModel.find({ "_id": req.body.Product })
+    console.log(Data)
     if (Data[0]) {
-       
 
-            const Record = await ProductsModel.updateOne({ "_id": req.body.Product }, { ...req.body });
 
-            if (Record.nModified > 0) {
-                return res.status(200).json({
-                    success: true, message: "Product Updated Successfully"
-                })
-            }
-            return res.status(500).json({
-                success: false, message: "Error!  Product Not-Updated Successfully"
+        const Record = await ProductsModel.updateOne({ "_id": req.body.Product }, { ...req.body });
+
+        if (Record.nModified > 0) {
+            return res.status(200).json({
+                success: true, message: "Product Updated Successfully"
             })
-        
-       
+        }
+        return res.status(500).json({
+            success: false, message: "Error!  Product Not-Updated Successfully"
+        })
+
+
     }
     else {
         return next(new Error('Product Not Found '))
@@ -63,9 +71,9 @@ exports.GetAll = catchAsync(async (req, res, next) => {
 
     if (Data[0]) {
 
-            return res.status(200).json({
-                success: true, message: "Products Found", Data
-            })
+        return res.status(200).json({
+            success: true, message: "Products Found", Data
+        })
 
     }
     else {
@@ -74,4 +82,42 @@ exports.GetAll = catchAsync(async (req, res, next) => {
     }
 })
 
+exports.Delete = catchAsync(async (req, res, next) => {
 
+    console.log("hit ",)
+    try {
+
+        const Agency = await AgencyModel.find({ "_id": req.body.Agency })
+        console.log("Agency Found===>>>", Agency)
+        if (Agency[0]) {
+            const index = await Agency[0].Products.indexOf(req.body.Product);
+            console.log("index===", index)
+            Agency[0].Products.splice(index, 1)
+            const save = await Agency[0].save()
+            const Record = await ProductsModel.deleteOne({ "_id": req.body.Product })
+            console.log("delete", Record)
+            if (Record.deletedCount > 0) {
+                return res.status(200).json({
+                    success: true, message: "Cash Register Deleted Successfully"
+                })
+            }
+            return res.status(500).json({
+                success: false, message: "Error! Cash Register with this ID Not Found"
+            })
+
+        }
+
+
+        return res.status(500).json({
+            success: false, message: "Error! Cash Register with this ID Not Found"
+        })
+
+
+    }
+    catch (error) {
+        console.log("error", error)
+        return next(new Error('Error! Cash Register with this ID Not Found'))
+
+    }
+
+})
