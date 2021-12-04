@@ -63,6 +63,7 @@ URL: api/operator/signup (Post)
 "Password":"12345678",
 "PhoneNumber":"000000000000000000",
 "NationalId":"photo",
+"Image":"profilephoto",
 "ExpiryDate":"12/12/1999",
 "Agency":"61a9ddcb0fbc7c0634f970ac"
 }
@@ -118,6 +119,7 @@ URL: api/member/signup (Post)
 "PhoneNumber":"000000000000000000",
 "Role":"customer",
 "NationalId":"photo",
+"Image":"profilephoto",
 "ExpiryDate":"12/12/1999",
 "Agency":"61a9ddcb0fbc7c0634f970ac",
 "Operator":"61a9e0f55dbdae46c022e0fc"
