@@ -28,6 +28,9 @@ const MemberSchema = new mongoose.Schema({
         type: String,
         enum: ['customer', 'collector']
     },
+    Gender: {
+        type: String
+    },
     NationalId:{
         type: String
     },

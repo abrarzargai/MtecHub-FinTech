@@ -17,6 +17,9 @@ const OperatorSchema = new mongoose.Schema({
     Email: {
         type: String
     },
+    Gender: {
+        type: String
+    },
     Password: {
         type: String,
         default: '1234'
