@@ -36,7 +36,7 @@ const MemberSchema = new mongoose.Schema({
     },
     CashRegister: [{
         type: mongoose.Types.ObjectId,
-        ref: 'CashRegister',
+        ref: 'CashRegisterMember',
     }],
     Subscriptions: [{
         type: mongoose.Types.ObjectId,

@@ -23,13 +23,17 @@ const CashRegisterSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Operator',
     },
-    Product: {
+    Product: [{
         type: mongoose.Types.ObjectId,
         ref: 'Product',
-    },
+    }],
     Agency: {
         type: mongoose.Types.ObjectId,
         ref: 'Agency',
+    },
+    Member: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Member',
     },
     TransactionType: {
         type: String,
@@ -38,6 +42,9 @@ const CashRegisterSchema = new mongoose.Schema({
     Amount:{
         type: Number,
         default: 0.00
+    },
+    VerifiedByAdmin: {
+        type: Boolean
     },
     CancelByAdmin:{
         type:Boolean
@@ -51,5 +58,5 @@ const CashRegisterSchema = new mongoose.Schema({
     });
 
 
-const CashRegister = mongoose.model("CashRegister", CashRegisterSchema);
+const CashRegister = mongoose.model("CashRegisterMember", CashRegisterSchema);
 module.exports = CashRegister;

@@ -8,7 +8,8 @@ const ImageUpload = require('./Routes/ImageUpload')
 
 const Admin = require('./Routes/Admin')
 const Agency = require('./Routes/Agency')
-const CashRegister = require('./Routes/CashRegister')
+const CashRegisterMember = require('./Routes/CashRegisterMember')
+const CashRegisterAgency = require('./Routes/CashRegisterAgency')
 const Products = require('./Routes/Products')
 const Member = require('./Routes/Member')
 const Operator = require('./Routes/Operator')
@@ -17,7 +18,8 @@ const Auth = require('./Routes/Auth')
 /*********Main Api**********/
 router.use('/Admin',Admin);
 router.use('/Agency', Agency);
-router.use('/CashRegister', CashRegister);
+router.use('/CashRegisterAgency', CashRegisterAgency);
+router.use('/CashRegisterMember', CashRegisterMember);
 router.use('/Product', Products);
 router.use('/Operator', Operator);
 router.use('/Member', Member);

@@ -1,14 +1,22 @@
 const mongoose = require("mongoose");
 
-const CashRegisterSchema = new mongoose.Schema({
+const CashRegisterAgencySchema = new mongoose.Schema({
     Customer: {
-         type: mongoose.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: 'Member',
     },
-    Product: {
-         type: mongoose.Types.ObjectId,
+    Agency: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Agency',
+    },
+    Product: [{
+        type: mongoose.Types.ObjectId,
         ref: 'Product',
-    },   
+    }],
+    Operator: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Operator',
+    },
     TransactionType: {
         type: String,
         enum: ['debit', 'credit'],
@@ -33,5 +41,5 @@ const CashRegisterSchema = new mongoose.Schema({
     });
 
 
-const CashRegister = mongoose.model("CashRegister", CashRegisterSchema);
-module.exports = CashRegister;
+const CashRegisterAgency = mongoose.model("CashRegisterAgency", CashRegisterAgencySchema);
+module.exports = CashRegisterAgency;

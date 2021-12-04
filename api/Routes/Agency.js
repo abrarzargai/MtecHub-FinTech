@@ -6,10 +6,8 @@ const { restrictTo } = require('../Middleware/auth')
 /***************Routes************/
 
 //Add new Agency
-route.post('/Add',
-    restrictTo('admin'),    
-    middleware.AddAgencyValidation, middleware.validationFunction, 
-    AgencyServices.Add);
+route.post('/Add',AgencyServices.Add);
+route.get('/getall', AgencyServices.GetALL);
 
 
 module.exports = route;

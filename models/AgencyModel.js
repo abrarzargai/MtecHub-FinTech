@@ -9,10 +9,10 @@ const AgencySchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  CashRegister: {
+  CashRegister: [{
     type: mongoose.Types.ObjectId,
-    ref: 'CashRegister',
-  },
+    ref: 'CashRegisterAgency',
+  }],
   Products:[{
     type: mongoose.Types.ObjectId,
     ref: 'Product',
