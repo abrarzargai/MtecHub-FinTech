@@ -73,7 +73,7 @@ URL: api/operator/signup (Post)
 URL: api/operator/login (Post)
 
 -requried= {
-"Email":"abrara@gmail.com",
+"Email":"ali@gmail.com",
 "Password":"12345678"
 }
 
@@ -111,6 +111,15 @@ URL: /api/operator/getone (Post)
 -requried= {
 	"Id":"61ab3a2fafdff56730bc9d72" (Mongodb ID of a operator You are searching for)
 }
+## ForgetPassword of Operator
+
+URL: /api/operator/ForgetPassword (Post)
+
+-requried= {
+	"Email":"abrarzargai@gmail.com"
+	
+}
+---response: it will automatically generate 9 digit new password and the new password will be send to User on the given Email Address.
 
 ## ##################################################################### Member
 
@@ -169,6 +178,25 @@ URL: api/member/updatepassword (Post)
 "NewPassword":"12345678"
 }
 
+## GetAll members
+
+URL: /api/member/getall (Get)
+
+## GetOne members
+
+URL: /api/member/GetOne (Post)
+-requried= {
+"Email":"abrarmember@gmail.com"
+}
+## Forget Operator
+
+URL: /api/member/ForgetPassword (Post)
+
+-requried= {
+	"Email":"abrarzargai@gmail.com"
+	
+}
+---response: it will automatically generate 9 digit new password and the new password will be send to User on the given Email Address.
 ## ##################################################################### Products
 
 ## Add

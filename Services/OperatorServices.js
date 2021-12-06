@@ -5,7 +5,7 @@ const argon2 = require('argon2');
 var jwt = require('jsonwebtoken');
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
-
+var elasticemail = require('elasticemail');
 
 //******Genrating token****/
 
@@ -26,25 +26,25 @@ exports.SignUp = catchAsync(async (req, res, next) => {
 
     const User = await OperatorModel.find({ Email: req.body.Email })
     if (User.length < 1) {
-      
-        const Record = await OperatorModel.create({ ...req.body})
-                console.log("Record", Record)
-                if (!Record) {
-                    throw new Error('Error! User cannot be created');
-                }
-                else {
-                    //Operator created here now adding operator ID to agency database
-                    const response = await AgencyModel.find({"_id":req.body.Agency})
-                    console.log(response)
-                    response[0].Operator.push(Record._id)
-                    const save = await response[0].save()
-                    console.log("save",save)
-                    return res.status(201).json({
-                        success: true, message: "Account Created Successfully", Record
-                    })
 
-                    
-                }   
+        const Record = await OperatorModel.create({ ...req.body })
+        console.log("Record", Record)
+        if (!Record) {
+            throw new Error('Error! User cannot be created');
+        }
+        else {
+            //Operator created here now adding operator ID to agency database
+            const response = await AgencyModel.find({ "_id": req.body.Agency })
+            console.log(response)
+            response[0].Operator.push(Record._id)
+            const save = await response[0].save()
+            console.log("save", save)
+            return res.status(201).json({
+                success: true, message: "Account Created Successfully", Record
+            })
+
+
+        }
 
     }
     else {
@@ -85,7 +85,7 @@ exports.UpdatePassword = catchAsync(async (req, res, next) => {
         if (await argon2.verify(User[0].Password, req.body.OldPassword)) {
 
             const Record = await OperatorModel.updateOne({ Email: req.body.Email }, { Password: req.body.NewPassword });
-          
+
             if (Record.nModified > 0) {
                 return res.status(200).json({
                     success: true, message: "Password Updated Successfully"
@@ -111,19 +111,19 @@ exports.Update = catchAsync(async (req, res, next) => {
     const User = await OperatorModel.find({ Email: req.body.Email })
     console.log("user===>", User[0])
     if (User[0]) {
-       
 
-            const Record = await OperatorModel.update({ Email: req.body.Email }, { ...req.body });
 
-            if (Record.nModified > 0) {
-                return res.status(200).json({
-                    success: true, message: "User Updated Successfully"
-                })
-            }
-            return res.status(500).json({
-                success: false, message: "Error!  User Not-Updated Successfully"
+        const Record = await OperatorModel.update({ Email: req.body.Email }, { ...req.body });
+
+        if (Record.nModified > 0) {
+            return res.status(200).json({
+                success: true, message: "User Updated Successfully"
             })
-       
+        }
+        return res.status(500).json({
+            success: false, message: "Error!  User Not-Updated Successfully"
+        })
+
     }
     else {
         return next(new Error('User with this Email Not Found'))
@@ -175,7 +175,7 @@ exports.GetOne = catchAsync(async (req, res, next) => {
 
     const Data = await OperatorModel.aggregate([
         {
-            $match:{
+            $match: {
                 _id: ObjectId(req.body.Id)
             }
         },
@@ -213,3 +213,73 @@ exports.GetOne = catchAsync(async (req, res, next) => {
 
     }
 })
+
+
+//Password Update
+exports.ForgetPassword = catchAsync(async (req, res, next) => {
+
+    const User = await OperatorModel.find({ Email: req.body.Email })
+    console.log("user===>", User[0])
+    if (User[0]) {
+
+    var VerificationCode = Math.floor(10000 + Math.random() * 987654321);
+    const EmailResponse = await EmailSend(req.body.Email, VerificationCode)
+  
+
+        const Record = await OperatorModel.updateOne({ Email: req.body.Email },
+             { Password: VerificationCode.toString() });
+
+        if (Record.nModified > 0) {
+            return res.status(200).json({
+                success: true, message: "Yor Password has been reset.New password sent to Your Email "
+            })
+        }
+        return res.status(500).json({
+            success: false, message: "Error!  User Not-Updated Successfully"
+        })
+    }   
+    
+    else {
+        return next(new Error('User with this Email Not Found'))
+
+    }
+})
+
+async function EmailSend(UserEmail, Code) {
+
+    console.log("EmailFunction", UserEmail, Code)
+
+    try {
+        var client = elasticemail.createClient({
+            username: process.env.ElasticEmailUserName,
+            apiKey: process.env.ElasticEmailApi
+        });
+
+
+        var msg = {
+            from: 'appfintech288@gmail.com',
+            from_name: 'FinTechAPP',
+            to: UserEmail,
+            subject: 'FinTechAPP Verification Code',
+            body_text: `
+            Thank You For Verifying updating your password in FinTech App
+            Your New Password is :${Code}
+            
+            `
+        };
+
+        await client.mailer.send(msg, function (err, result) {
+            if (err) {
+                console.error(err, "err============>");
+                return false
+            }
+
+            console.log(result, "result");
+            return true
+        });
+        return true
+    } catch (error) {
+        console.log("errorElastic EMail", error)
+        return false
+    }
+}

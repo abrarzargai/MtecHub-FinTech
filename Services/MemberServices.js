@@ -4,7 +4,9 @@ const OperatorModel = require('../models/OperatorModel');
 const catchAsync = require('../utils/catchAsync');
 const argon2 = require('argon2');
 var jwt = require('jsonwebtoken');
-
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
+var elasticemail = require('elasticemail');
 
 
 //******Genrating token****/
@@ -137,3 +139,170 @@ exports.Update = catchAsync(async (req, res, next) => {
     }
 })
 
+//GetAll
+exports.GetAll = catchAsync(async (req, res, next) => {
+
+    const Data = await MemberModel.aggregate([
+        {
+            $lookup:
+            {
+                from: 'cashregistermembers',
+                localField: 'CashRegister',
+                foreignField: '_id',
+                as: 'CashRegister'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'agencies',
+                localField: 'Agency',
+                foreignField: '_id',
+                as: 'Agency'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'operators',
+                localField: 'Operator',
+                foreignField: '_id',
+                as: 'Operator'
+            },
+        },
+
+    ])
+
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Member Found", Data
+        })
+
+    }
+    else {
+        return next(new Error('No Member Found'))
+
+    }
+})
+
+//GetOne
+exports.GetOne = catchAsync(async (req, res, next) => {
+
+    const Data = await MemberModel.aggregate([
+        {
+            $match: {
+                Email: req.body.Email
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'cashregistermembers',
+                localField: 'CashRegister',
+                foreignField: '_id',
+                as: 'CashRegister'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'agencies',
+                localField: 'Agency',
+                foreignField: '_id',
+                as: 'Agency'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'operators',
+                localField: 'Operator',
+                foreignField: '_id',
+                as: 'Operator'
+            },
+        },
+    ])
+
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Member Found", Data
+        })
+
+    }
+    else {
+        return next(new Error('Member Not Found'))
+
+    }
+})
+
+
+//Password Update
+exports.ForgetPassword = catchAsync(async (req, res, next) => {
+
+    const User = await MemberModel.find({ Email: req.body.Email })
+    console.log("user===>", User[0])
+    if (User[0]) {
+
+        var VerificationCode = Math.floor(10000 + Math.random() * 987654321);
+        const EmailResponse = await EmailSend(req.body.Email, VerificationCode)
+
+
+        const Record = await MemberModel.updateOne({ Email: req.body.Email },
+            { Password: VerificationCode.toString() });
+
+        if (Record.nModified > 0) {
+            return res.status(200).json({
+                success: true, message: "Yor Password has been reset.New password sent to Your Email "
+            })
+        }
+        return res.status(500).json({
+            success: false, message: "Error!  User Not-Updated Successfully"
+        })
+    }
+
+    else {
+        return next(new Error('User with this Email Not Found'))
+
+    }
+})
+
+async function EmailSend(UserEmail, Code) {
+
+    console.log("EmailFunction", UserEmail, Code)
+
+    try {
+        var client = elasticemail.createClient({
+            username: process.env.ElasticEmailUserName,
+            apiKey: process.env.ElasticEmailApi
+        });
+
+
+        var msg = {
+            from: 'appfintech288@gmail.com',
+            from_name: 'FinTechAPP',
+            to: UserEmail,
+            subject: 'FinTechAPP Verification Code',
+            body_text: `
+            Thank You For Verifying updating your password in FinTech App
+            Your New Password is :${Code}
+            
+            `
+        };
+
+        await client.mailer.send(msg, function (err, result) {
+            if (err) {
+                console.error(err, "err============>");
+                return false
+            }
+
+            console.log(result, "result");
+            return true
+        });
+        return true
+    } catch (error) {
+        console.log("errorElastic EMail", error)
+        return false
+    }
+}

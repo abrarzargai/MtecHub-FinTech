@@ -12,5 +12,6 @@ route.post('/updatepassword', OperatorServices.UpdatePassword);
 route.post('/update', OperatorServices.Update);
 route.get('/GetAll', OperatorServices.GetAll);
 route.post('/Getone', OperatorServices.GetOne);
+route.post('/ForgetPassword', OperatorServices.ForgetPassword);
 
 module.exports = route;
