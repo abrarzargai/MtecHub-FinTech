@@ -7,6 +7,9 @@ const { restrictTo } = require('../Middleware/auth')
 
 //Add new Agency
 route.post('/Add',AgencyServices.Add);
+route.post('/GetOne', AgencyServices.GetOne);
+// route.post('/Delete', AgencyServices.Delete);
+route.post('/Update', AgencyServices.Update);
 route.get('/getall', AgencyServices.GetALL);
 
 

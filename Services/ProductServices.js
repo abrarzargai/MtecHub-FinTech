@@ -82,6 +82,7 @@ exports.GetAll = catchAsync(async (req, res, next) => {
     }
 })
 
+
 exports.Delete = catchAsync(async (req, res, next) => {
 
     console.log("hit ",)
@@ -120,4 +121,22 @@ exports.Delete = catchAsync(async (req, res, next) => {
 
     }
 
+})
+
+//GetOne
+exports.GetOne = catchAsync(async (req, res, next) => {
+
+    const Data = await ProductsModel.find({"_id":req.body.Id})
+
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Products Found", Data
+        })
+
+    }
+    else {
+        return next(new Error('No Products Found'))
+
+    }
 })

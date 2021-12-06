@@ -3,7 +3,8 @@ const OperatorModel = require('../models/OperatorModel');
 const catchAsync = require('../utils/catchAsync');
 const argon2 = require('argon2');
 var jwt = require('jsonwebtoken');
-
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 
 
 //******Genrating token****/
@@ -130,3 +131,85 @@ exports.Update = catchAsync(async (req, res, next) => {
     }
 })
 
+//GetAll
+exports.GetAll = catchAsync(async (req, res, next) => {
+
+    const Data = await OperatorModel.aggregate([
+
+        {
+            $lookup:
+            {
+                from: 'agencies',
+                localField: 'Agency',
+                foreignField: '_id',
+                as: 'Agency'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'members',
+                localField: 'Member',
+                foreignField: '_id',
+                as: 'Member'
+            },
+        },
+
+    ])
+
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Operator Found", Data
+        })
+
+    }
+    else {
+        return next(new Error('No Operator Found'))
+
+    }
+})
+
+//GetOne
+exports.GetOne = catchAsync(async (req, res, next) => {
+
+    const Data = await OperatorModel.aggregate([
+        {
+            $match:{
+                _id: ObjectId(req.body.Id)
+            }
+        },
+
+        {
+            $lookup:
+            {
+                from: 'agencies',
+                localField: 'Agency',
+                foreignField: '_id',
+                as: 'Agency'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'members',
+                localField: 'Member',
+                foreignField: '_id',
+                as: 'Member'
+            },
+        },
+
+    ])
+
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Operator Found", Data
+        })
+
+    }
+    else {
+        return next(new Error('Operator Not Found'))
+
+    }
+})

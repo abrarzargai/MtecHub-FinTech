@@ -102,6 +102,16 @@ URL: api/operator/updatepassword (Post)
 "NewPassword":"12345"
 }
 
+## GetALL Operators
+URL: /api/operator/getall (Get)
+## GetOne Operator
+
+URL: /api/operator/getone (Post)
+
+-requried= {
+	"Id":"61ab3a2fafdff56730bc9d72" (Mongodb ID of a operator You are searching for)
+}
+
 ## ##################################################################### Member
 
 ## Signup
@@ -176,11 +186,13 @@ URL: /Api/product/Add (Post)
 ## Update
 
 URL: /Api/product/update (Post)
-
+(You can update everything in product)
 -requried={
 "Product":"61ab09eb07f62f4792285d103a", (MongoDB Id)
-"Duration":"yearly",
-"Status":"enabled"
+ "Label": "Product1098123123123",
+"Duration":"monthly",
+"Status":"disabled",
+"Code": 101001
 }
 
 ## Delete
@@ -196,6 +208,15 @@ URL: /Api/product/delete (Post)
 ## GETAllProducts
 
 URL: /Api/product/GetAll (GET)
+
+
+## GetSpecific Product
+
+URL: /api/product/GetOne (Post)
+
+-requried={
+    "Id":"61ab461079b0606704df8481" (mongoDB iD of product that you are searching for)
+}
 
 ## ##################################################################### CashRegisterAgency
 
@@ -303,3 +324,21 @@ URL: /api/agency/add (Post)
 ## GetALL data of Agency
 
 URL: /api/agency/getall (Get)
+
+## GetSpecific Agency
+
+URL: /api/agency/getone (Post)
+
+-requried={
+    "Id":"61ab461079b0606704df8481" (mongoDB iD of agency that you are searching for)
+}
+
+## Update Agency
+
+URL: /api/agency/update (Post)
+
+-requried={
+    "Id":"61ab461079b0606704df8481" (mongoDB iD of agency that you want to update)
+    "Code":100101,
+    "Label":"sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd",  
+}
