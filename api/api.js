@@ -14,6 +14,7 @@ const Products = require('./Routes/Products')
 const Member = require('./Routes/Member')
 const Operator = require('./Routes/Operator')
 const Auth = require('./Routes/Auth')
+const Subscription = require('./Routes/Subscription')
 
 /*********Main Api**********/
 router.use('/Admin',Admin);
@@ -24,6 +25,7 @@ router.use('/Product', Products);
 router.use('/Operator', Operator);
 router.use('/Member', Member);
 router.use('/Auth', Auth);
+router.use('/Subscription', Subscription);
 
 
 //Common Api's

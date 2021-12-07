@@ -307,32 +307,3 @@ async function EmailSend(UserEmail, Code) {
     }
 }
 
-//Add Subscription
-exports.AddSubscription = catchAsync(async (req, res, next) => {
-
-    const User = await MemberModel.find({ Email: req.body.Email })
-    console.log("user===>", User[0])
-    if (User[0]) {
-
-        var VerificationCode = Math.floor(10000 + Math.random() * 987654321);
-        const EmailResponse = await EmailSend(req.body.Email, VerificationCode)
-
-
-        const Record = await MemberModel.updateOne({ Email: req.body.Email },
-            { Password: VerificationCode.toString() });
-
-        if (Record.nModified > 0) {
-            return res.status(200).json({
-                success: true, message: "Yor Password has been reset.New password sent to Your Email "
-            })
-        }
-        return res.status(500).json({
-            success: false, message: "Error!  User Not-Updated Successfully"
-        })
-    }
-
-    else {
-        return next(new Error('User with this Email Not Found'))
-
-    }
-})

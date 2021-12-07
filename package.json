@@ -1,5 +1,5 @@
 {
-  "name": "example",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -7,9 +7,9 @@
     "nodemon": "nodemon --exec npm start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "ndb server.js",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
-  "author": "abrar",
+  "author": "Abrar Khan Zargai",
   "license": "ISC",
   "dependencies": {
     "argon2": "^0.28.2",

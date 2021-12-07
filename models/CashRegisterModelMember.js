@@ -37,6 +37,9 @@ const CashRegisterSchema = new mongoose.Schema({
     },
     Amount:{
         type: Number,
+    },
+    Balance: {
+        type: Number,
         default: 0.00
     },
     VerifiedByAdmin: {

@@ -215,6 +215,8 @@ exports.GetOne = catchAsync(async (req, res, next) => {
 })
 
 
+
+
 //Password Update
 exports.ForgetPassword = catchAsync(async (req, res, next) => {
 

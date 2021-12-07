@@ -24,7 +24,11 @@ const AgencySchema = new mongoose.Schema({
    Member:[{
     type: mongoose.Types.ObjectId,
     ref: 'Member',
-  }]
+  }],
+   IsDeleted: {
+    type: Boolean,
+    default: false
+  }
 },
   {
     timestamps: true,

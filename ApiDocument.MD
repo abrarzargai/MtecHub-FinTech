@@ -370,3 +370,82 @@ URL: /api/agency/update (Post)
     "Code":100101,
     "Label":"sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd",  
 }
+
+
+## ##################################################################### Subscription
+## Add Subscription
+
+URL: /Api/Subscription/Add (Post)
+
+-requried={
+   "AgencyCashRegisterCode":123123,
+   "AgencyCashRegisterLabel":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "AgencyCashRegisterStatus":"pending",
+   "AgencyCashRegisterCollectionDate":"02-02-2021",
+   "AgencyCashRegisterStartDate":"02-02-2021",
+   "UserCashRegisterStatus":"pending",
+   "UserCashRegisterLabel": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "UserCashRegisterCode":123123,
+   "Currency": "eur",
+   "OperatorId": "61adc69c31ecbc41b02ac60a",
+   "productId":"61af1244d348e600160c1554",
+   "AgencyId": "61ade217361e1700163ca206",
+   "MemberId":"61ab3b2f3dfe7a4644bbac29",
+   "Amount": 20,
+   "SubscribedBy":"member",
+   "SubscriptionDuration":"monthly",
+   "SubscriptionStatus": "approved"
+}
+
+
+## Update Subscription
+
+URL: /Api/Subscription/update (Post)
+
+-requried={
+   "Id":"61af3086231e4c33a41845db",(mongodb Id Of a subscription)
+   "Status":"approved",
+   "Duration":"yearly",
+   "Price":240
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Subscription GetAllByMember 
+URL: /Api/Subscription/GetAllByAgency (Post)
+
+-requried={
+    "MemberId":"61ade217361e1700163ca206" (mongodb ID of member)
+}
+## Subscription GetAllByAgency
+URL: /Api/Subscription/GetAllByAgency (Post)
+
+-requried={
+    "AgencyId":"61ade217361e1700163ca206" (mongodb ID of agency)
+}
+
+## Subscription GetOne 
+URL: /Api/Subscription/GetOne (Post)
+
+-requried=
+{
+    "Id":"61af3086231e4c33a41845db" (mongodb ID of subscription)
+}

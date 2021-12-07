@@ -99,18 +99,18 @@ exports.Delete = catchAsync(async (req, res, next) => {
             console.log("delete", Record)
             if (Record.deletedCount > 0) {
                 return res.status(200).json({
-                    success: true, message: "Cash Register Deleted Successfully"
+                    success: true, message: "Product Deleted Successfully"
                 })
             }
             return res.status(500).json({
-                success: false, message: "Error! Cash Register with this ID Not Found"
+                success: false, message: "Error! Product Not Found"
             })
 
         }
 
 
         return res.status(500).json({
-            success: false, message: "Error! Cash Register with this ID Not Found"
+            success: false, message: "Error! Product Not Found"
         })
 
 
