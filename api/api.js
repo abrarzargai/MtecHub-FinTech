@@ -15,6 +15,7 @@ const Member = require('./Routes/Member')
 const Operator = require('./Routes/Operator')
 const Auth = require('./Routes/Auth')
 const Subscription = require('./Routes/Subscription')
+const Collection = require('./Routes/Collection')
 
 /*********Main Api**********/
 router.use('/Admin',Admin);
@@ -26,6 +27,7 @@ router.use('/Operator', Operator);
 router.use('/Member', Member);
 router.use('/Auth', Auth);
 router.use('/Subscription', Subscription);
+router.use('/Collection', Collection);
 
 
 //Common Api's
