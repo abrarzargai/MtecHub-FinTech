@@ -176,3 +176,279 @@ exports.Update = catchAsync(async (req, res, next) => {
     }
 
 })
+
+//GetCollections Account by Agency
+exports.GetByAgency = catchAsync(async (req, res, next) => {
+
+
+
+    const Data = await CollectionModel.aggregate([
+
+
+        {
+            $match: {
+                Agency: ObjectId(req.body.AgencyId)
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'products',
+                localField: 'Product',
+                foreignField: '_id',
+                as: 'Product'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'operators',
+                localField: 'Operator',
+                foreignField: '_id',
+                as: 'Operator'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'agencies',
+                localField: 'Agency',
+                foreignField: '_id',
+                as: 'Agency'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'members',
+                localField: 'Customer',
+                foreignField: '_id',
+                as: 'Customer'
+            },
+        },
+
+    ])
+    console.log(Data)
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Data Found", Data
+        })
+
+    }
+    else {
+        return next(new Error('Data Not Found'))
+
+    }
+
+
+
+
+})
+
+//GetCollections Account by Agency
+exports.GetByMember = catchAsync(async (req, res, next) => {
+
+
+
+    const Data = await CollectionModel.aggregate([
+
+
+        {
+            $match: {
+                Customer: ObjectId(req.body.MemberId)
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'products',
+                localField: 'Product',
+                foreignField: '_id',
+                as: 'Product'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'operators',
+                localField: 'Operator',
+                foreignField: '_id',
+                as: 'Operator'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'agencies',
+                localField: 'Agency',
+                foreignField: '_id',
+                as: 'Agency'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'members',
+                localField: 'Customer',
+                foreignField: '_id',
+                as: 'Customer'
+            },
+        },
+
+    ])
+    console.log(Data)
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Data Found", Data
+        })
+
+    }
+    else {
+        return next(new Error('Data Not Found'))
+
+    }
+
+
+
+
+})
+
+//GetCollections Account by Products
+exports.GetByProduct = catchAsync(async (req, res, next) => {
+
+
+
+    const Data = await CollectionModel.aggregate([
+
+
+        {
+            $match: {
+                Product: ObjectId(req.body.ProductId)
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'products',
+                localField: 'Product',
+                foreignField: '_id',
+                as: 'Product'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'operators',
+                localField: 'Operator',
+                foreignField: '_id',
+                as: 'Operator'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'agencies',
+                localField: 'Agency',
+                foreignField: '_id',
+                as: 'Agency'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'members',
+                localField: 'Customer',
+                foreignField: '_id',
+                as: 'Customer'
+            },
+        },
+
+    ])
+    console.log(Data)
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Data Found", Data
+        })
+
+    }
+    else {
+        return next(new Error('Data Not Found'))
+
+    }
+
+
+
+
+})
+
+//GetCollections Account by Operator
+exports.GetByOperator = catchAsync(async (req, res, next) => {
+
+
+
+    const Data = await CollectionModel.aggregate([
+
+
+        {
+            $match: {
+                Operator: ObjectId(req.body.OperatorId)
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'products',
+                localField: 'Product',
+                foreignField: '_id',
+                as: 'Product'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'operators',
+                localField: 'Operator',
+                foreignField: '_id',
+                as: 'Operator'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'agencies',
+                localField: 'Agency',
+                foreignField: '_id',
+                as: 'Agency'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'members',
+                localField: 'Customer',
+                foreignField: '_id',
+                as: 'Customer'
+            },
+        },
+
+    ])
+    console.log(Data)
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Data Found", Data
+        })
+
+    }
+    else {
+        return next(new Error('Data Not Found'))
+
+    }
+
+
+
+
+})

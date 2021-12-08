@@ -9,6 +9,10 @@ const { restrictTo } = require('../Middleware/auth')
 route.post('/Add', CollectionServices.Add);
 route.post('/Update', CollectionServices.Update);
 route.post('/GetOne', CollectionServices.GetOne);
+route.post('/GetByAgency', CollectionServices.GetByAgency);
+route.post('/GetByMember', CollectionServices.GetByMember);
+route.post('/GetByProduct', CollectionServices.GetByProduct);
+route.post('/GetByOperator', CollectionServices.GetByOperator);
 route.get('/GetALL', CollectionServices.GetALL);
 
 
