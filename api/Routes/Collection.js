@@ -13,6 +13,9 @@ route.post('/GetByAgency', CollectionServices.GetByAgency);
 route.post('/GetByMember', CollectionServices.GetByMember);
 route.post('/GetByProduct', CollectionServices.GetByProduct);
 route.post('/GetByOperator', CollectionServices.GetByOperator);
+route.post('/GetByDateRange', CollectionServices.GetByDateRange);
+route.post('/SettleCollectionAccount', CollectionServices.SettleCollectionAccount);
+route.post('/CancelTransaction', CollectionServices.CancelTransaction);
 route.get('/GetALL', CollectionServices.GetALL);
 
 

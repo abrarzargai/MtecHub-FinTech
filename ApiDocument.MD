@@ -443,9 +443,258 @@ URL: /Api/Subscription/GetAllByAgency (Post)
 }
 
 ## Subscription GetOne 
+
 URL: /Api/Subscription/GetOne (Post)
 
 -requried=
 {
     "Id":"61af3086231e4c33a41845db" (mongodb ID of subscription)
 }
+
+## ##################################################################### Collection ##
+
+## Add
+
+URL: /Api/Collection/Add (Post)
+
+-requried=
+{
+    "Code":100001,
+    "Customer":"61ab3b2f3dfe7a4644bbac29",
+    "CollectionDate":"2021-12-12",
+    "Product":"61af1244d348e600160c1554",
+    "Agency":"61af7ac2dcfd6b001613d991",
+    "Operator":"61ab3a2fafdff56730bc9d72",
+    "StartingDate":"2021/12/08"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Update
+
+URL: /Api/Collection/Add (Post)
+
+-requried=
+{   "Id":"61b06bdf63373101c090587f",(mongodb ID of collection account)
+    "Code":100001,
+    "CollectionDate":"2021-12-12",
+    "Status":"pending\closed\working any status"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## GetALL
+
+URL: /Api/Collection/getall (Get)
+
+## GetOne Collection Account
+
+URL: /Api/Collection/getone (Post)
+
+required ={
+    "Id":"61b06bdf63373101c090587f"(Id of collection )
+}
+
+## GetAll Collection Accounts for specific Agency
+
+URL: /Api/Collection/GetByAgency (Post)
+
+required ={
+    "AgencyId":"61af7ac2dcfd6b001613d991"
+}
+
+## GetAll Collection Accounts for specific Member
+
+URL: /Api/Collection/GetByMember (Post)
+
+required = {
+    "MemberId":"61ab3b2f3dfe7a4644bbac29"
+}
+
+## GetAll Collection Accounts for specific Product
+
+URL: /Api/Collection/GetByProduct (Post)
+
+required = {
+    "ProductId":"61af1244d348e600160c1554"
+}
+
+## GetAll Collection Accounts for specific Operator
+
+URL: /Api/Collection/GetByOperator (Post)
+
+required = {
+    "OperatorId":"61ab3a2fafdff56730bc9d72"
+}
+
+## GetAll Collection By Date Range
+
+URL: /Api/Collection/GetByDateRange (Post)
+
+required = {
+   
+    "StartDate":"2021-12-10",
+    "EndDate":"2021-12-15"
+}
+## SettleCollectionAccount / Make a Transaction
+
+URL: /Api/Collection/SettleCollectionAccount (Post)
+
+required = {  
+    "MemberId":"61ab3b2f3dfe7a4644bbac29",
+    "ProductId":"61af1244d348e600160c1554",
+    "CollectionId":"61b06bdf63373101c090587f"
+}
+## SettleCollectionAccount / Make a Transaction
+
+URL: /Api/Collection/SettleCollectionAccount (Post)
+
+required = {  
+    "MemberId":"61ab3b2f3dfe7a4644bbac29",
+    "ProductId":"61af1244d348e600160c1554",
+    "CollectionId":"61b06bdf63373101c090587f"
+}
+## CancelTransaction by Admin
+
+URL: /Api/Collection/CancelTransaction (Post)
+
+required = {
+    
+    "MemberId":"61ab3b2f3dfe7a4644bbac29",
+    "ProductId":"61af1244d348e600160c1554",
+    "CollectionId":"61b06bdf63373101c090587f",
+    "Comment": "Invalid Transaction.Payment already charged"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,6 +4,13 @@ const CollectionSchema = new mongoose.Schema({
     Code: {
         type: Number,
     },
+    Amount: {
+        type: Number,
+    },
+    Duration: {
+        type: String,
+        enum: ['monthly', 'bimonthly', 'quarter', 'semester', 'annual']
+    },
     Customer: {
         type: mongoose.Types.ObjectId,
         ref: 'Member',
@@ -29,6 +36,12 @@ const CollectionSchema = new mongoose.Schema({
     Status: {
         type: String,
         default: "pending"
+    },
+    CancelByAdmin: {
+        type: Boolean
+    },
+    CommentByAdmin: {
+        type: String
     },
 },
     {
