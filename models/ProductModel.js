@@ -15,6 +15,9 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         enum: ['enabled', 'disabled']
     },
+    Price: {
+        type: Number,
+    },
     
 },
     {

@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
 
 const CashRegisterAgencySchema = new mongoose.Schema({
-    Code: {
-        type: Number,
-    },
-    Label: {
-        type: String,
-    },
+  
     Status: {
         type: String,
+    },
+    Duration: {
+        type: String,
+        enum: ['monthly', 'bimonthly', 'quarter', 'semester', 'annual']
     },
     Customer: {
         type: mongoose.Types.ObjectId,
@@ -33,9 +32,6 @@ const CashRegisterAgencySchema = new mongoose.Schema({
     Currency: {
         type: String,
         enum: ['eur', 'xof'],
-    },
-    CollectionDate: {
-        type: Date,
     },
     StartDate: {
         type: Date,

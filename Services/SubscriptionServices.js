@@ -33,14 +33,16 @@ exports.Add = catchAsync(async (req, res, next) => {
 
         //adding new subscription to db
         const Subscription = await SubscriptionModel.create({
-            Status: req.body.SubscriptionStatus,
-            Duration: req.body.SubscriptionDuration,
-            Price: req.body.Amount,
+            Status: req.body.Status,
+            Duration: req.body.Duration,
+            Amount: req.body.Amount,
             Product: req.body.productId,
             Member: req.body.MemberId,
             Operator: req.body.OperatorId,
             Agency: req.body.AgencyId,
-            SubscribedBy: req.body.SubscribedBy,
+            StartDate: req.body.StartDate,
+            Currency: req.body.Currency,
+            
         })
         console.log("Subscription", Subscription)
         if (Subscription) {
@@ -52,9 +54,9 @@ exports.Add = catchAsync(async (req, res, next) => {
             console.log("save", save)
 
             const usercashregisterdata = {
-                Code: req.body.UserCashRegisterCode,
-                Label: req.body.UserCashRegisterLabel,
-                Status: req.body.UserCashRegisterStatus,
+                Duration: req.body.Duration,
+                StartDate: req.body.StartDate,
+                Status: req.body.Status,
                 Currency: req.body.Currency,
                 Operator: req.body.OperatorId,
                 Product: req.body.productId,
@@ -68,17 +70,15 @@ exports.Add = catchAsync(async (req, res, next) => {
 
             if (UserRegister) {
                 const Agencycashregisterdata = {
-                    Code: req.body.AgencyCashRegisterCode,
-                    Label: req.body.AgencyCashRegisterLabel,
-                    Status: req.body.AgencyCashRegisterStatus,
+                    Duration: req.body.Duration,
+                    Status: req.body.Status,
                     Customer: req.body.MemberId,
                     Agency: req.body.AgencyId,
                     Product: req.body.productId,
                     Operator: req.body.OperatorId,
                     TransactionType: "credit",
                     Currency: req.body.Currency,
-                    CollectionDate: req.body.AgencyCashRegisterCollectionDate,
-                    StartDate: req.body.AgencyCashRegisterStartDate,
+                    StartDate: req.body.StartDate,
                     Amount: req.body.Amount,
                 }
                 const AgencyRegister = await AgencyCashRegisterHandler(Agencycashregisterdata)

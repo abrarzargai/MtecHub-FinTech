@@ -378,23 +378,16 @@ URL: /api/agency/update (Post)
 URL: /Api/Subscription/Add (Post)
 
 -requried={
-   "AgencyCashRegisterCode":123123,
-   "AgencyCashRegisterLabel":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-   "AgencyCashRegisterStatus":"pending",
-   "AgencyCashRegisterCollectionDate":"02-02-2021",
-   "AgencyCashRegisterStartDate":"02-02-2021",
-   "UserCashRegisterStatus":"pending",
-   "UserCashRegisterLabel": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-   "UserCashRegisterCode":123123,
+
    "Currency": "eur",
    "OperatorId": "61adc69c31ecbc41b02ac60a",
-   "productId":"61af1244d348e600160c1554",
+   "productId":"61b23e9ac336ae0016a153dd",
    "AgencyId": "61ade217361e1700163ca206",
-   "MemberId":"61ab3b2f3dfe7a4644bbac29",
+   "MemberId":"61addde3ae3c2c1f14542953",
    "Amount": 20,
-   "SubscribedBy":"member",
-   "SubscriptionDuration":"monthly",
-   "SubscriptionStatus": "approved"
+   "Duration":"monthly",
+   "Status": "open",
+   "StartDate":"2021-12-12"
 }
 
 

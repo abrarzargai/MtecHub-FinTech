@@ -1,15 +1,9 @@
 const mongoose = require("mongoose");
 
 const CashRegisterSchema = new mongoose.Schema({
-    Code: {
-        type: Number,
-    },
-     Label: {
-        type: String,
-    },
+  
     Status: {
         type: String,
-        enum: ['enabled', 'disabled'],
     },
     Currency: {
         type: String,
@@ -27,6 +21,10 @@ const CashRegisterSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Agency',
     },
+    Duration: {
+        type: String,
+        enum: ['monthly', 'bimonthly', 'quarter', 'semester', 'annual']
+    },
     Member: {
         type: mongoose.Types.ObjectId,
         ref: 'Member',
@@ -38,15 +36,6 @@ const CashRegisterSchema = new mongoose.Schema({
     Amount:{
         type: Number,
     },
-    VerifiedByAdmin: {
-        type: Boolean
-    },
-    CancelByAdmin:{
-        type:Boolean
-    },
-    CommentByAdmin:{
-        type:String
-    }
 },
     {
         timestamps: true,
