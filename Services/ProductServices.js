@@ -1,7 +1,8 @@
 const ProductsModel = require('../models/ProductModel');
 const catchAsync = require('../utils/catchAsync');
-
 const AgencyModel = require('../models/AgencyModel');
+var mongoose = require('mongoose');
+
 /***************Services************/
 
 //Add
@@ -40,12 +41,12 @@ exports.Add = catchAsync(async (req, res, next) => {
 //Update
 exports.Update = catchAsync(async (req, res, next) => {
 
-    const Data = await ProductsModel.find({ "_id": req.body.Product })
+    const Data = await ProductsModel.find({ "_id": req.body.ProductId })
     console.log(Data)
     if (Data[0]) {
 
 
-        const Record = await ProductsModel.updateOne({ "_id": req.body.Product }, { ...req.body });
+        const Record = await ProductsModel.updateOne({ "_id": req.body.ProductId }, { ...req.body });
 
         if (Record.nModified > 0) {
             return res.status(200).json({
@@ -67,7 +68,29 @@ exports.Update = catchAsync(async (req, res, next) => {
 //GetAll
 exports.GetAll = catchAsync(async (req, res, next) => {
 
-    const Data = await ProductsModel.find()
+    // const Data = await ProductsModel.find()
+    const Data = await ProductsModel.aggregate([
+
+        {
+            $lookup:
+            {
+                from: 'agencies',
+                localField: 'Agency',
+                foreignField: '_id',
+                as: 'Agency'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'operators',
+                localField: 'Operator',
+                foreignField: '_id',
+                as: 'Operator'
+            },
+        },
+
+    ])
 
     if (Data[0]) {
 
@@ -88,14 +111,14 @@ exports.Delete = catchAsync(async (req, res, next) => {
     console.log("hit ",)
     try {
 
-        const Agency = await AgencyModel.find({ "_id": req.body.Agency })
+        const Agency = await AgencyModel.find({ "_id": req.body.AgencyId })
         console.log("Agency Found===>>>", Agency)
         if (Agency[0]) {
-            const index = await Agency[0].Products.indexOf(req.body.Product);
+            const index = await Agency[0].Products.indexOf(req.body.ProductId);
             console.log("index===", index)
             Agency[0].Products.splice(index, 1)
             const save = await Agency[0].save()
-            const Record = await ProductsModel.deleteOne({ "_id": req.body.Product })
+            const Record = await ProductsModel.deleteOne({ "_id": req.body.ProductId })
             console.log("delete", Record)
             if (Record.deletedCount > 0) {
                 return res.status(200).json({
@@ -126,7 +149,32 @@ exports.Delete = catchAsync(async (req, res, next) => {
 //GetOne
 exports.GetOne = catchAsync(async (req, res, next) => {
 
-    const Data = await ProductsModel.find({"_id":req.body.Id})
+    const Data = await ProductsModel.aggregate([
+        {
+            $match: {
+                "_id": mongoose.Types.ObjectId(req.body.ProductId)
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'agencies',
+                localField: 'Agency',
+                foreignField: '_id',
+                as: 'Agency'
+            },
+        },
+        {
+            $lookup:
+            {
+                from: 'operators',
+                localField: 'Operator',
+                foreignField: '_id',
+                as: 'Operator'
+            },
+        },
+
+    ])
 
     if (Data[0]) {
 

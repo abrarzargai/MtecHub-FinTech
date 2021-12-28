@@ -24,10 +24,6 @@ const MemberSchema = new mongoose.Schema({
     PhoneNumber: {
         type: String
     },
-    Role: {
-        type: String,
-        enum: ['customer', 'collector']
-    },
     Gender: {
         type: String
     },

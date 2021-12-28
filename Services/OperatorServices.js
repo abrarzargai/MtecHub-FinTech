@@ -34,7 +34,7 @@ exports.SignUp = catchAsync(async (req, res, next) => {
         }
         else {
             //Operator created here now adding operator ID to agency database
-            const response = await AgencyModel.find({ "_id": req.body.Agency })
+            const response = await AgencyModel.find({ "_id": req.body.AgencyId })
             console.log(response)
             response[0].Operator.push(Record._id)
             const save = await response[0].save()
@@ -109,12 +109,13 @@ exports.UpdatePassword = catchAsync(async (req, res, next) => {
 exports.Update = catchAsync(async (req, res, next) => {
 
     const User = await OperatorModel.find({ Email: req.body.Email })
-    console.log("user===>", User[0])
+    console.log("user===>>>", User[0])
+   
     if (User[0]) {
 
-
+        console.log("body",{...req.body})
         const Record = await OperatorModel.update({ Email: req.body.Email }, { ...req.body });
-
+       
         if (Record.nModified > 0) {
             return res.status(200).json({
                 success: true, message: "User Updated Successfully"
@@ -176,7 +177,7 @@ exports.GetOne = catchAsync(async (req, res, next) => {
     const Data = await OperatorModel.aggregate([
         {
             $match: {
-                _id: ObjectId(req.body.Id)
+                _id: ObjectId(req.body.OperatorId)
             }
         },
 
@@ -213,9 +214,6 @@ exports.GetOne = catchAsync(async (req, res, next) => {
 
     }
 })
-
-
-
 
 //Password Update
 exports.ForgetPassword = catchAsync(async (req, res, next) => {

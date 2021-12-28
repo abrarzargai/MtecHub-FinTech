@@ -1,26 +1,24 @@
 const mongoose = require("mongoose");
 
 const CollectionSchema = new mongoose.Schema({
-    Code: {
-        type: Number,
-    },
+
     Amount: {
         type: Number,
-    },
-    Duration: {
-        type: String,
-        enum: ['monthly', 'bimonthly', 'quarter', 'semester', 'annual']
     },
     Customer: {
         type: mongoose.Types.ObjectId,
         ref: 'Member',
     },
+    Product: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Product',
+    },
     CollectionDate: {
         type: Date,
     },
-    Product: {
+    Subscription: {
         type: mongoose.Types.ObjectId,
-        ref: 'product',
+        ref: 'Subscription',
     },
     Agency: {
         type: mongoose.Types.ObjectId,
@@ -30,18 +28,9 @@ const CollectionSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Operator',
     },
-    StartingDate: {
-        type: Date,
-    },
     Status: {
         type: String,
-        default: "pending"
-    },
-    CancelByAdmin: {
-        type: Boolean
-    },
-    CommentByAdmin: {
-        type: String
+        default: "Collected"
     },
 },
     {

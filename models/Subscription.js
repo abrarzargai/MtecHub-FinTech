@@ -1,20 +1,28 @@
 const mongoose = require("mongoose");
 
 const SubscriptionSchema = new mongoose.Schema({
-   
-   
-    Status: {
+
+    Code: {
         type: String,
     },
-    StartingDate: {
+    Name: {
         type: String,
+    },
+    Amount: {
+        type: Number,
     },
     Duration: {
         type: String,
         enum: ['monthly', 'bimonthly', 'quarter', 'semester', 'annual']
     },
-    Amount: {
-        type: Number,
+    Status: {
+        type: String,
+    },
+    StartDate: {
+        type: Date,
+    },
+    EndDate: {
+        type: Date,
     },
     Product: {
         type: mongoose.Types.ObjectId,
@@ -26,16 +34,12 @@ const SubscriptionSchema = new mongoose.Schema({
     },
     Operator: {
         type: mongoose.Types.ObjectId,
-        ref: 'Member',
+        ref: 'Operator',
     },
     Agency: {
         type: mongoose.Types.ObjectId,
-        ref: 'Member',
-    },
-    Currency: {
-        type: String,
-        enum: ['eur', 'xof'],
-    },
+        ref: 'Agency',
+    }   
 },
     {
         timestamps: true,

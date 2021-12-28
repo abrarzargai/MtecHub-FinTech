@@ -2,7 +2,6 @@ const AgencyModel = require('../models/AgencyModel');
 const MemberModel = require('../models/MemberModel');
 const OperatorModel = require('../models/OperatorModel');
 const ProductModel = require('../models/ProductModel');
-const CashRegisterAgencyModel = require('../models/CashRegisterAgencyModel');
 const catchAsync = require('../utils/catchAsync');
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
@@ -292,7 +291,7 @@ exports.Update = catchAsync(async (req, res, next) => {
             })
         }
         return res.status(500).json({
-            success: false, message: "Error!  Agency Not-Updated Successfully"
+            success: false, message: "Error!  Agency Not Found"
         })
     }catch(error){
 

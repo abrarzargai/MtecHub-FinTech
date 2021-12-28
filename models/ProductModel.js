@@ -18,6 +18,14 @@ const ProductSchema = new mongoose.Schema({
     Price: {
         type: Number,
     },
+    Agency: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Agency',
+    },
+    Operator: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Operator',
+    },
     
 },
     {
