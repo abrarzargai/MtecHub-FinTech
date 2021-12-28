@@ -3,50 +3,52 @@ const route = express.Router();
 const MiddleWare = require('../../utils/Middleware_validation')
 const stripe = require('stripe')(process.env.Stripe_Secret_key)
 var elasticemail = require('elasticemail');
+const nodemailer = require("nodemailer");
 const { authenticate } = require('../Middleware/auth')
 /***************Routes************/
 
 
-route.post('/Email', async (req, res,next) => {
-     console.log("Email Hit")
-    // var VerificationCode = Math.floor(1000 + Math.random() * 9000);
-    // console.log(VerificationCode);
-    
-    try {
-        
-        var client = elasticemail.createClient({
-            username: process.env.ElasticEmailUserName,
-            apiKey: process.env.ElasticEmailApi
-            });
+route.post('/email', async (req, res, next) => {
+    console.log("Email Hit", req.body)
 
-           
-            var msg = {
-            from: 'appfintech288@gmail.com',
-            from_name: 'FinTechAPP',
-                to: req.body.Email,
-                subject: 'FinTechAPP Verification Code',
-                body_text: `
-            Thank You For Registering Your Account in FinTech App
-            Your Verification code is :${req.body.Code}
+
+    try {
+        var transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            auth: {
+                user: process.env.Gmail,
+                pass: process.env.Password
+            },
+        });
+
+        var mailOptions = {
+            from: process.env.Gmail,
+            to: req.body.Email,
+            subject: 'FinTech App VerificationCode',
+            text: `
             
+            Thank you for Using FinTech App!
+             Your Verification code is : ${req.body.Code}
             `
-            };
-            
-            client.mailer.send(msg, function(err, result) {
-            if (err) {
-            console.error(err,"err============>");
-            }
-            
-                console.log(result, "result");
+        };
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log("error==>", error);
+                throw new Error('Error! Please Enter Valid Email Address');
+            } else {
+
+                console.log('Email sent: ' + info.response);
                 return res.status(200).json({
-                    success: true, message: "Verification Code sent to Your Email Successfully.Please check your Email/spam"
+                    success: true, message: "Email Sent Successfully.Please Check Your Email for verification Code"
                 })
-            });
-            
-       }catch(error) {
-        
-           throw new Error(error);
-        } 
+            }
+        });
+
+
+    } catch (error) {
+
+        throw new Error(error);
+    }
 
 });
 

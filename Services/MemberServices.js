@@ -7,7 +7,7 @@ var jwt = require('jsonwebtoken');
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 var elasticemail = require('elasticemail');
-
+const nodemailer = require("nodemailer");
 
 //******Genrating token****/
 
@@ -271,39 +271,40 @@ exports.ForgetPassword = catchAsync(async (req, res, next) => {
 async function EmailSend(UserEmail, Code) {
 
     console.log("EmailFunction", UserEmail, Code)
-
     try {
-        var client = elasticemail.createClient({
-            username: process.env.ElasticEmailUserName,
-            apiKey: process.env.ElasticEmailApi
+        var transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            auth: {
+                user: process.env.Gmail,
+                pass: process.env.Password
+            },
         });
 
-
-        var msg = {
-            from: 'appfintech288@gmail.com',
-            from_name: 'FinTechAPP',
+        var mailOptions = {
+            from: process.env.Gmail,
             to: UserEmail,
-            subject: 'FinTechAPP Verification Code',
-            body_text: `
-            Thank You For Verifying updating your password in FinTech App
-            Your New Password is :${Code}
+            subject: 'FinTech App VerificationCode',
+            text: `
             
+            Thank you for Using FinTech App!
+             Your Verification code is : ${Code}
             `
         };
-
-        await client.mailer.send(msg, function (err, result) {
-            if (err) {
-                console.error(err, "err============>");
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log("error==>", error);
                 return false
-            }
+            } else {
 
-            console.log(result, "result");
-            return true
+                console.log('Email sent: ' + info.response);
+                return true
+            }
         });
-        return true
+
+
     } catch (error) {
-        console.log("errorElastic EMail", error)
-        return false
+
+        throw new Error(error);
     }
 }
 

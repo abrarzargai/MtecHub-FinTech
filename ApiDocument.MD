@@ -1,6 +1,8 @@
 ## API Details
 
 BaseURL: http://localhost:8080
+BaseURL: https://fintechapp-mtechub.herokuapp.com/ (Deployed)
+
 
 ## ##################################################################### Admin
 
@@ -12,7 +14,7 @@ BaseURL: http://localhost:8080
     -Request :It need
              Email*(String),
              Password*(String)
-    -Response : And you get success,message,Record(whole Record of Admin Account)
+    -Response : And you get success,message,Record
 
 ## Admin Login
 
@@ -54,20 +56,21 @@ BaseURL: http://localhost:8080
 URL: api/operator/signup (Post)
 
 -requried={
-"FirstName":"abrar",
-"LastName":"khan",
-"DOB":"12/12/1999",
-"City":"isb",
-"Gender":"male",
-"Email":"abrara@gmail.com",
-"Password":"12345678",
-"PhoneNumber":"000000000000000000",
-"NationalId":"photo",
-"Image":"profilephoto",
-"ExpiryDate":"12/12/1999",
-"Agency":"61a9ddcb0fbc7c0634f970ac"
+    "FirstName":"FirstName",
+    "LastName":"LastName",
+    "DOB":"12/27/2021",
+    "City":"City",
+    "Email":"abrarzargai@gmail.com",
+    "Gender":"male",
+    "Password":"operator@gmail.com",
+    "PhoneNumber":"0987654321",
+    "NationalId":"NationalIdImage",
+    "ExpiryDate":"12/27/2021",
+    "Image":"Image",
+    "AgencyId":"61c99918a2a1e916fc9dbccc"
 }
 
+-Response : And you get success,message,Record
 ## Login
 
 URL: api/operator/login (Post)
@@ -77,6 +80,7 @@ URL: api/operator/login (Post)
 "Password":"12345678"
 }
 
+-Response : And you get success,message,token,Record
 ## update
 
 URL: api/operator/update (Post)
@@ -91,7 +95,8 @@ URL: api/operator/update (Post)
 "NationalId":"photo1",
 "ExpiryDate":"12/12/1999"
 }
-
+-Email is must in update all other values are depend user want to update
+-Response : And you get success,message,Record
 ## update Password
 
 URL: api/operator/updatepassword (Post)
@@ -101,7 +106,7 @@ URL: api/operator/updatepassword (Post)
 "OldPassword":"12345678",
 "NewPassword":"12345"
 }
-
+-Response : And you get success,message
 ## GetALL Operators
 URL: /api/operator/getall (Get)
 ## GetOne Operator
@@ -111,6 +116,8 @@ URL: /api/operator/getone (Post)
 -requried= {
 	"Id":"61ab3a2fafdff56730bc9d72" (Mongodb ID of a operator You are searching for)
 }
+
+-Response : And you get success,message
 ## ForgetPassword of Operator
 
 URL: /api/operator/ForgetPassword (Post)
@@ -133,16 +140,16 @@ URL: api/member/signup (Post)
 "DOB":"12/12/1999",
 "City":"isb",
 "Gender":"male",
-"Email":"abrarmember@gmail.com",
+"Email":"abrar@gmail.com",
 "Password":"12345678",
 "PhoneNumber":"000000000000000000",
-"Role":"customer",
 "NationalId":"photo",
 "Image":"profilephoto",
 "ExpiryDate":"12/12/1999",
-"Agency":"61a9ddcb0fbc7c0634f970ac",
-"Operator":"61a9e0f55dbdae46c022e0fc"
+"Agency":"61c99918a2a1e916fc9dbccc",
+"Operator":"61c99c8bdc91e42e3c51f215"
 }
+-Response : And you get success,message,Record
 
 ## Login
 
@@ -153,6 +160,7 @@ URL: api/member/login (Post)
 "Password":"12345678"
 }
 
+-Response : And you get success,message,token,Record
 ## update
 
 URL: api/member/update (Post)
@@ -167,7 +175,8 @@ URL: api/member/update (Post)
 "NationalId":"photo",
 "ExpiryDate":"12/12/1999"
 }
-
+-Email is must in update all other values are depend user want to update
+-Response : And you get success,message,Record
 ## update Password
 
 URL: api/member/updatepassword (Post)
@@ -177,18 +186,21 @@ URL: api/member/updatepassword (Post)
 "OldPassword":"12345",
 "NewPassword":"12345678"
 }
+-Response : And you get success,message
 
 ## GetAll members
 
 URL: /api/member/getall (Get)
 
+-Response : And you get success,message,Record
 ## GetOne members
 
 URL: /api/member/GetOne (Post)
 -requried= {
 "Email":"abrarmember@gmail.com"
 }
-## Forget Operator
+-Response : And you get success,message,Record
+## Forget Password
 
 URL: /api/member/ForgetPassword (Post)
 
@@ -197,6 +209,7 @@ URL: /api/member/ForgetPassword (Post)
 	
 }
 ---response: it will automatically generate 9 digit new password and the new password will be send to User on the given Email Address.
+-Response : And you get success,message,Record
 ## ##################################################################### Products
 
 ## Add
@@ -204,139 +217,53 @@ URL: /api/member/ForgetPassword (Post)
 URL: /Api/product/Add (Post)
 
 -requried={
-"Code":"12342",
-"Label":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+"Code":"12345",
+"Label":"xxxxxxxxxxxxxxRRRxxxxxxxxxxxxxx",
 "Duration":"monthly",
-"Status":"disabled",
-"Agency":"61ab3547a132245658cdc560"
+"Status":"enabled",
+"Agency":"61c99918a2a1e916fc9dbccc",
+"Operator":"61c99c8bdc91e42e3c51f215",
+"Price":23.32
 }
 
+-Response : And you get success,message,Record
 ## Update
 
 URL: /Api/product/update (Post)
-(You can update everything in product)
+
 -requried={
-"Product":"61ab09eb07f62f4792285d103a", (MongoDB Id)
+"ProductId":"61cab3bfcbf5312e846d478f",
  "Label": "Product1098123123123",
 "Duration":"monthly",
 "Status":"disabled",
 "Code": 101001
 }
-
+-ProductId is must all other values are depend user want to update
+-Response : And you get success,message
 ## Delete
 
 URL: /Api/product/delete (Post)
 
 -requried={
-"Product":"61ab3cc9f16906163cf80354",(Mongodb ID of product)
-"Agency":"61ab3547a132245658cdc560", (Mongodb ID of agency in which product is listed)
+"ProductId":"61ab3cc9f16906163cf80354",(Mongodb ID of product)
+"AgencyId":"61ab3547a132245658cdc560", (Mongodb ID of agency in which product is listed)
 
 }
-
+-Response : And you get success,message
 ## GETAllProducts
 
 URL: /Api/product/GetAll (GET)
-
+-Response : And you get success,message,Record
 
 ## GetSpecific Product
 
 URL: /api/product/GetOne (Post)
 
 -requried={
-    "Id":"61ab461079b0606704df8481" (mongoDB iD of product that you are searching for)
+    "ProductId":"61ab461079b0606704df8481" (mongoDB iD of product that you are searching for)
 }
 
-## ##################################################################### CashRegisterAgency
-
-## Add New Cash Register For Agency
-
-URL: /Api/CashRegisterAgency/Add (Post)
-
--requried={
-"Code":"12345",
-"Label":"xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-"Status":"enabled",
-"Customer":"61a9f6282b2ced58d8880d00", (mongodb id of member)
-"Product":["61a9c840ebd5774c8c5ea138","61a9c849ebd5774c8c5ea139"],(array of mongodb id of products)
-"Operator":"61a9e0f55dbdae46c022e0fc",(mongodb id of operator)
-"Agency":"61a9ddcb0fbc7c0634f970ac",(mongodb id of agency)
-"TransactionType":"debit",
-"Currency":"eur",
-"CollectionDate":"12-08-2021",
-"StartDate":"12-04-2021",
-"Amount":21.19
-}
-
-## Update Cash Register For Agency
-
-URL: /Api/CashRegisterAgency/update (Post)
-
--requried={
-"CashRegisterAgency":"61ab0f503c28f45af486f3f3",(mongodb id of a cash agency you want to update)
-"CollectionDate":"12-10-2021",
-"StartDate":"12-04-2021",
-"Amount":24.24
-}
-
-## Delete a Cash Register For Agency
-
-URL: /Api/CashRegisterAgency/delete (Post)
-
--requried={
-"CashRegisterAgency":"61ab0f503c28f45af486f3f3",(mongodb id of a cash agency you want to delete)
-
-}
-
-## Get ALL data of Cash Register For Agency
-
-URL: /Api/CashRegisterAgency/getall (Get)
-
-## ##################################################################### CashRegisterMember
-
-## Add New Cash Register For Member
-
-URL: /Api/CashRegisterMember/Add (Post)
-
--requried={
-"Code":"12345",
-"Label":"xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-"Status":"enabled",
-"Customer":"61a9f6282b2ced58d8880d00", (mongodb id of member)
-"Product":["61a9c840ebd5774c8c5ea138","61a9c849ebd5774c8c5ea139"],(array of mongodb id of products)
-"Operator":"61a9e0f55dbdae46c022e0fc",(mongodb id of operator)
-"Agency":"61a9ddcb0fbc7c0634f970ac",(mongodb id of agency)
-"TransactionType":"debit",
-"Currency":"eur",
-"CollectionDate":"12-08-2021",
-"StartDate":"12-04-2021",
-"Amount":21.19
-}
-
-## Update Cash Register For Member
-
-URL: /Api/CashRegisterMember/update (Post)
-
--requried={
-"CashRegisterMember":"61ab1b40d99aab6f987ae6f3",(mongodb id of a cash register you want to updated)
-"Amount":50.21,
-"VerifiedByAdmin":true,
-"CancelByAdmin":false,
-"CommentByAdmin":""
-
-}
-
-## Delete a Cash Register For Member
-
-URL: /Api/CashRegisterMember/delete (Post)
-
--requried={
-"CashRegisterMember":"61ab1dd8af07c75508db0d16",(mongodb id of a cash register you want to delete)
-
-}
-
-## Get ALL data of Cash Register For Member
-
-URL: /Api/CashRegisterMember/getall (Get)
+-Response : And you get success,message,Record
 
 ## ##################################################################### Agency
 
@@ -349,10 +276,11 @@ URL: /api/agency/add (Post)
 "Label":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  
 }
 
+-Response : And you get success,message,Record
 ## GetALL data of Agency
 
 URL: /api/agency/getall (Get)
-
+-Response : And you get success,message,Record
 ## GetSpecific Agency
 
 URL: /api/agency/getone (Post)
@@ -361,6 +289,7 @@ URL: /api/agency/getone (Post)
     "Id":"61ab461079b0606704df8481" (mongoDB iD of agency that you are searching for)
 }
 
+-Response : And you get success,message,Record
 ## Update Agency
 
 URL: /api/agency/update (Post)
@@ -371,6 +300,7 @@ URL: /api/agency/update (Post)
     "Label":"sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd",  
 }
 
+-Response : And you get success,message,Record
 
 ## ##################################################################### Subscription
 ## Add Subscription
@@ -379,315 +309,126 @@ URL: /Api/Subscription/Add (Post)
 
 -requried={
 
-   "Currency": "eur",
-   "OperatorId": "61adc69c31ecbc41b02ac60a",
-   "productId":"61b23e9ac336ae0016a153dd",
-   "AgencyId": "61ade217361e1700163ca206",
-   "MemberId":"61addde3ae3c2c1f14542953",
-   "Amount": 20,
-   "Duration":"monthly",
-   "Status": "open",
-   "StartDate":"2021-12-12"
+"Code":"0102",
+  "Name":"Item-1",
+  "Amount":20.34,
+  "Duration":"monthly",
+  "Status":"open",
+  "StartDate":"12/28/2021",
+  "EndDate":"12/230/2021",
+  "Product":"61cab3bfcbf5312e846d478f",
+  "Member":"61caae7e350f301008dbdb42",
+  "Operator":"61c99c8bdc91e42e3c51f215",
+  "Agency":"61c99918a2a1e916fc9dbccc"
 }
-
+-Response : And you get success,message,Record
 
 ## Update Subscription
 
 URL: /Api/Subscription/update (Post)
 
 -requried={
-   "Id":"61af3086231e4c33a41845db",(mongodb Id Of a subscription)
-   "Status":"approved",
-   "Duration":"yearly",
-   "Price":240
-  
+ "SubscriptionId":"0102",
+  "Code":"0102",
+  "Name":"Item-1",
+  "Amount":20.34,
+  "Duration":"monthly",
+  "Status":"open",
+  "StartDate":"12/28/2021",
+  "EndDate":"12/230/2021"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-SubscriptionId is must all other data depends on user wants to update
+-Response : And you get success,message
 ## Subscription GetAllByMember 
 URL: /Api/Subscription/GetAllByAgency (Post)
 
 -requried={
     "MemberId":"61ade217361e1700163ca206" (mongodb ID of member)
 }
+-Response : And you get success,message,Record
 ## Subscription GetAllByAgency
 URL: /Api/Subscription/GetAllByAgency (Post)
 
 -requried={
     "AgencyId":"61ade217361e1700163ca206" (mongodb ID of agency)
 }
-
+-Response : And you get success,message,Record
 ## Subscription GetOne 
 
 URL: /Api/Subscription/GetOne (Post)
 
 -requried=
 {
-    "Id":"61af3086231e4c33a41845db" (mongodb ID of subscription)
+    "SubscriptionId":"61af3086231e4c33a41845db" (mongodb ID of subscription)
 }
-
+-Response : And you get success,message,Record
 ## ##################################################################### Collection ##
 
-## Add
+## Add Collection Account
 
 URL: /Api/Collection/Add (Post)
 
 -requried=
 {
-    "Code":100001,
-    "Customer":"61ab3b2f3dfe7a4644bbac29",
-    "CollectionDate":"2021-12-12",
-    "Product":"61af1244d348e600160c1554",
-    "Agency":"61af7ac2dcfd6b001613d991",
-    "Operator":"61ab3a2fafdff56730bc9d72",
-    "StartingDate":"2021/12/08"
+"Amount":100.19,
+"Customer":"61caae7e350f301008dbdb42",
+"CollectionDate":"10/28/2021",
+"Subscription":"61cab8c1bdfa7307281fba6c",
+"Agency":"61c99918a2a1e916fc9dbccc",
+"Operator":"61c99c8bdc91e42e3c51f215",
+"Product":"61cab3bfcbf5312e846d478f"
 }
+-Response : And you get success,message,Record
 
+## GetAllCollectionByAgency / if user want to check the all collection accounts under specific agency
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Update
-
-URL: /Api/Collection/Add (Post)
+URL: /api/Collection/GetByAgency (Post)
 
 -requried=
-{   "Id":"61b06bdf63373101c090587f",(mongodb ID of collection account)
-    "Code":100001,
-    "CollectionDate":"2021-12-12",
-    "Status":"pending\closed\working any status"
+{
+"AgencyId":"61c99918a2a1e916fc9dbccc"
 }
+-Response : And you get success,message,Record
+## GetAllCollectionByMember / if user want to check the all collection accounts under specific member
 
+URL: /api/Collection/GetByMember (Post)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## GetALL
-
-URL: /Api/Collection/getall (Get)
-
-## GetOne Collection Account
-
-URL: /Api/Collection/getone (Post)
-
-required ={
-    "Id":"61b06bdf63373101c090587f"(Id of collection )
+-requried=
+{
+"MemberId":"61c99918a2a1e916fc9dbccc"
 }
+-Response : And you get success,message,Record
+## GetAllCollectionByProduct / if user want to check the all collection accounts under specific Product
 
-## GetAll Collection Accounts for specific Agency
+URL: /api/Collection/GetByProduct (Post)
 
-URL: /Api/Collection/GetByAgency (Post)
-
-required ={
-    "AgencyId":"61af7ac2dcfd6b001613d991"
+-requried=
+{
+"ProductId":"61c99918a2a1e916fc9dbccc"
 }
+-Response : And you get success,message,Record
+## GetAllCollectionByOperator / if user want to check the all collection accounts under specific Operator
 
-## GetAll Collection Accounts for specific Member
+URL: /api/Collection/GetByOperator (Post)
 
-URL: /Api/Collection/GetByMember (Post)
-
-required = {
-    "MemberId":"61ab3b2f3dfe7a4644bbac29"
+-requried=
+{
+"OperatorId":"61c99918a2a1e916fc9dbccc"
 }
+-Response : And you get success,message,Record
+## GetAllCollectionByDateRange / if user want to check the all collection accounts under specific DateRange
 
-## GetAll Collection Accounts for specific Product
+URL: /api/Collection/GetByDateRange (Post)
 
-URL: /Api/Collection/GetByProduct (Post)
-
-required = {
-    "ProductId":"61af1244d348e600160c1554"
+-requried=
+{
+"StartDate":"10/01/2021",
+"EndDate":"11/01/2022"
 }
+-Response : And you get success,message,Record
 
-## GetAll Collection Accounts for specific Operator
+## GetAllCollections Account
 
-URL: /Api/Collection/GetByOperator (Post)
+URL: /api/Collection/Getall (Get)
 
-required = {
-    "OperatorId":"61ab3a2fafdff56730bc9d72"
-}
-
-## GetAll Collection By Date Range
-
-URL: /Api/Collection/GetByDateRange (Post)
-
-required = {
-   
-    "StartDate":"2021-12-10",
-    "EndDate":"2021-12-15"
-}
-## SettleCollectionAccount / Make a Transaction
-
-URL: /Api/Collection/SettleCollectionAccount (Post)
-
-required = {  
-    "MemberId":"61ab3b2f3dfe7a4644bbac29",
-    "ProductId":"61af1244d348e600160c1554",
-    "CollectionId":"61b06bdf63373101c090587f"
-}
-## SettleCollectionAccount / Make a Transaction
-
-URL: /Api/Collection/SettleCollectionAccount (Post)
-
-required = {  
-    "MemberId":"61ab3b2f3dfe7a4644bbac29",
-    "ProductId":"61af1244d348e600160c1554",
-    "CollectionId":"61b06bdf63373101c090587f"
-}
-## CancelTransaction by Admin
-
-URL: /Api/Collection/CancelTransaction (Post)
-
-required = {
-    
-    "MemberId":"61ab3b2f3dfe7a4644bbac29",
-    "ProductId":"61af1244d348e600160c1554",
-    "CollectionId":"61b06bdf63373101c090587f",
-    "Comment": "Invalid Transaction.Payment already charged"
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-Response : And you get success,message,Record
