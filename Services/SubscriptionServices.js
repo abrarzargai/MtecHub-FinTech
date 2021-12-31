@@ -6,47 +6,53 @@ const catchAsync = require('../utils/catchAsync');
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 
-
 /***************Services************/
 
 //Add
 exports.Add = catchAsync(async (req, res, next) => {
 
+    // Handling CashRegister here 
+    const CashRegisterArray = [] //initializaied Empty Array for CashRegister
+    const User = await MemberModel.find({ "_id": req.body.Member }) //used to find UserName
+    //used to find the price according to Per Day
+    const Price = await PriceCalHandler(new Date(req.body.StartDate), new Date(req.body.EndDate), req.body.Amount)
 
-    //Checking if user already subscribed this product
-    const AlreadySubscribeItems = await SubscriptionModel.find(
-        {
-
-            Member: ObjectId(req.body.Member)
-
-        }
-    )
-    console.log("Log==>", AlreadySubscribeItems[0])
-    if (AlreadySubscribeItems[0]) {
-        if (AlreadySubscribeItems[0].Product == req.body.Product) {
-            return next(new Error('You have Already subscribed this Item '))
-        }
+    //used to make CashRegister Array
+    const start = new Date(req.body.StartDate);
+    const end = new Date(req.body.EndDate);
+    let loop = new Date(start);
+    while (loop <= end) {
+        console.log(loop);
+        
+        CashRegisterArray.push({
+            Name: User[0].FirstName + ' ' + User[0].LastName,
+            DateOfCollection: loop,
+            CollectionAmount: Price.toFixed(3),
+            SubscriptionName: req.body.Name,
+            Status:'Pending'
+        })
+        let newDate = loop.setDate(loop.getDate() + 1);
+        loop = new Date(newDate);
     }
+    console.log("--------------", CashRegisterArray)
 
     //adding new subscription to db
-    const Subscription = await SubscriptionModel.create({ ...req.body })
+    const Subscription = await SubscriptionModel.create({ ...req.body, CashRegister: CashRegisterArray })
     console.log("Subscription", Subscription)
-    if (Subscription) {
-        //calling User and storing productID to user subscription
-        const User = await MemberModel.find({ "_id": req.body.Member })
-        console.log("User Found", User)
-        User[0].Subscriptions.push(Subscription._id)
-        const save = await User[0].save()
-        console.log("save", save)
-
-
-        return res.status(201).json({
-            success: true, message: "Product Subscribed Successfully"
-        })
-
-
-
+    if (!Subscription) {
+        throw new Error('Error!Subscription Cannot Be Created ')
     }
+
+    //calling User and storing productID to user subscription
+    const UserData = await MemberModel.find({ "_id": req.body.Member })
+    console.log("User Found", UserData)
+    UserData[0].Subscriptions.push(Subscription._id)
+    await UserData[0].save()
+    return res.status(201).json({
+        success: true, message: "Product Subscribed Successfully"
+    })
+
+
 
 
 
@@ -232,3 +238,16 @@ exports.GetOne = catchAsync(async (req, res, next) => {
 
     }
 })
+
+async function PriceCalHandler(start, end, Amount) {
+
+    let loop = new Date(start);
+    let Total = 0
+    while (loop <= end) {
+        Total = Total + 1
+        let newDate = loop.setDate(loop.getDate() + 1);
+        loop = new Date(newDate);
+    }
+    return Amount / Total
+
+}

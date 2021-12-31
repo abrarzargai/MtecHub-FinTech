@@ -11,6 +11,9 @@ const SubscriptionSchema = new mongoose.Schema({
     Amount: {
         type: Number,
     },
+    Balance:{
+        type: Number,
+    },
     Duration: {
         type: String,
         enum: ['monthly', 'bimonthly', 'quarter', 'semester', 'annual']
@@ -39,7 +42,14 @@ const SubscriptionSchema = new mongoose.Schema({
     Agency: {
         type: mongoose.Types.ObjectId,
         ref: 'Agency',
-    }   
+    },  
+    CashRegister:[{
+        Name:{type:String},
+        DateOfCollection:{type:Date},
+        CollectionAmount:{type:Number},
+        SubscriptionName: {type:String},
+        Status:{type:String}
+    }] 
 },
     {
         timestamps: true,

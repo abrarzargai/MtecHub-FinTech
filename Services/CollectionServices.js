@@ -12,8 +12,13 @@ const ObjectId = mongoose.Types.ObjectId;
 
 //Add
 exports.Add = catchAsync(async (req, res, next) => {
-
-
+   // console.log("Body Collection hit",req.body)
+    const Handler = await CashRegisterHandler(req.body)
+    console.log("Handler",Handler)
+    if (!Handler){
+        throw new Error('Error! Amount already collected for this Date');
+    }
+    
     const Record = await CollectionModel.create({ ...req.body })
     console.log("Record", Record)
     if (!Record) {
@@ -590,3 +595,28 @@ exports.GetByDateRange = catchAsync(async (req, res, next) => {
 
 
 })
+
+async function CashRegisterHandler(Data){
+
+    const CashRegister = await SubscriptionModel.find({"_id": Data.Subscription})
+    let index ;
+    CashRegister[0].CashRegister.map((x,i)=>{
+        if(x.DateOfCollection >= new Date(Data.CollectionDate))
+        {
+            if (!index){ index = i;}
+            
+        }
+    })
+    console.log(index,CashRegister[0].CashRegister[index].Status)
+    if (CashRegister[0].CashRegister[index].Status == "Collected")
+    {
+        return false
+    }
+    else
+    {console.log("index", index)
+    CashRegister[0].CashRegister[index].Status ="Collected"
+    await CashRegister[0].save()
+
+    return true}
+
+}
