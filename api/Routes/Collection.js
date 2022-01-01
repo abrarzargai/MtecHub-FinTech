@@ -14,6 +14,7 @@ route.post('/GetByMember', CollectionServices.GetByMember);
 route.post('/GetByProduct', CollectionServices.GetByProduct);
 route.post('/GetByOperator', CollectionServices.GetByOperator);
 route.post('/GetByDateRange', CollectionServices.GetByDateRange);
+route.post('/GetByMemberSubscription', CollectionServices.GetByMemberSubscription);
  route.get('/GetALL', CollectionServices.GetALL);
 
 

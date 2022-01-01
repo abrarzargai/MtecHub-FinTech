@@ -441,7 +441,7 @@ URL: /api/Collection/Getall (Get)
 
 -Response : And you get success,message,Record
 
-## GetAllCollections  For OneDay (User For Manage Collection Page)
+## GetAllCollections  For Day to Collect From User (User For Manage Collection Page)
     (this api is used in ManageCollection Page to display the record of collection for today)
 
 URL: /api/Subscription/GetQuerry (Post)
@@ -449,6 +449,19 @@ URL: /api/Subscription/GetQuerry (Post)
 -Request:{
   "OperatorId":"61c99c8bdc91e42e3c51f215",(MongoDb ID of Operator)
   "Date":"10/02/2021",(Today's Date)
+
+}
+-Response : And you get success,message,Record
+
+## GetAllcollectedAmount ByMember&Subscription (User For Manage CashRegister Page)
+    (this api is used when operator want's to see collected amount agains memeber and subscription)
+
+URL: /api/Collection/GetByMemberSubscription (Post)
+
+-Request:{
+"OperatorId":"61c99c8bdc91e42e3c51f215",(MongoDb of Operator)
+"MemberId":"61caae7e350f301008dbdb42", (MongoDb of Member)
+"SubscriptionId":"61cea4c5cb82671f24d10699" (MongoDb of Subscription)
 
 }
 -Response : And you get success,message,Record
