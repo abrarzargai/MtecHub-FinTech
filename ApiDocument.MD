@@ -353,6 +353,14 @@ URL: /Api/Subscription/GetAllByAgency (Post)
     "AgencyId":"61ade217361e1700163ca206" (mongodb ID of agency)
 }
 -Response : And you get success,message,Record
+## Subscription GetAllByOperator
+URL: /Api/Subscription/GetAllByOperator (Post)
+
+{
+  "OperatorId":"61c99c8bdc91e42e3c51f215" (Mongodb id of operator)
+
+}
+-Response : And you get success,message,Record
 ## Subscription GetOne 
 
 URL: /Api/Subscription/GetOne (Post)
@@ -431,4 +439,16 @@ URL: /api/Collection/GetByDateRange (Post)
 
 URL: /api/Collection/Getall (Get)
 
+-Response : And you get success,message,Record
+
+## GetAllCollections  For OneDay (User For Manage Collection Page)
+    (this api is used in ManageCollection Page to display the record of collection for today)
+
+URL: /api/Subscription/GetQuerry (Post)
+
+-Request:{
+  "OperatorId":"61c99c8bdc91e42e3c51f215",(MongoDb ID of Operator)
+  "Date":"10/02/2021",(Today's Date)
+
+}
 -Response : And you get success,message,Record

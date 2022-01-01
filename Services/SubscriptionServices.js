@@ -23,13 +23,13 @@ exports.Add = catchAsync(async (req, res, next) => {
     let loop = new Date(start);
     while (loop <= end) {
         console.log(loop);
-        
+
         CashRegisterArray.push({
             Name: User[0].FirstName + ' ' + User[0].LastName,
             DateOfCollection: loop,
             CollectionAmount: Price.toFixed(3),
             SubscriptionName: req.body.Name,
-            Status:'Pending'
+            Status: 'Pending'
         })
         let newDate = loop.setDate(loop.getDate() + 1);
         loop = new Date(newDate);
@@ -180,7 +180,33 @@ exports.GetAllByMember = catchAsync(async (req, res, next) => {
     }
 })
 
-//GetAllByMember
+//GetAllByOperator
+exports.GetAllByOperator = catchAsync(async (req, res, next) => {
+
+    const Data = await SubscriptionModel.aggregate([
+        {
+            $match: { Operator: ObjectId(req.body.OperatorId) }
+        },
+        {
+            $group: { _id: "$Member", count: { $sum: 1 } }
+        },
+    ])
+
+    const Response = await OperatorSubscriptionHandler(Data)
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Data Found", Response
+        })
+
+    }
+    else {
+        return next(new Error('No Data Found'))
+
+    }
+})
+
+//GetOne
 exports.GetOne = catchAsync(async (req, res, next) => {
 
     const Data = await SubscriptionModel.aggregate([
@@ -239,6 +265,53 @@ exports.GetOne = catchAsync(async (req, res, next) => {
     }
 })
 
+
+exports.GetQuerry = catchAsync(async (req, res, next) => {
+
+
+    const Data = await SubscriptionModel.find({
+        Operator: req.body.OperatorId,
+        CashRegister: {
+            $elemMatch: { DateOfCollection: new Date(req.body.Date) }
+        }
+    })
+
+    const promises = Data.map((x) => {
+
+        var CashRegister
+        x.CashRegister.map((a) => {
+            if (!CashRegister) {
+                if (a.DateOfCollection >= new Date(req.body.Date)) {
+
+                    CashRegister = { Name: a.Name, DateOfCollection
+                        : a.DateOfCollection, CollectionAmount
+                            : a.CollectionAmount, SubscriptionName
+                            : a.SubscriptionName, Status: a.Status}
+
+                }
+            }
+        })
+        
+        return {
+            ...CashRegister, Operator: x.Operator, Member: x.Member, Product: x.Product,
+            Agency: x.Agency, Code: x.Code, Subscription:x._id
+        }
+    })
+
+    const APIData = await Promise.all(promises)
+    if (Data[0]) {
+
+        return res.status(200).json({
+            success: true, message: "Data Found", Data: APIData
+        })
+
+    }
+    else {
+        return next(new Error('No Data Found'))
+
+    }
+})
+
 async function PriceCalHandler(start, end, Amount) {
 
     let loop = new Date(start);
@@ -251,3 +324,35 @@ async function PriceCalHandler(start, end, Amount) {
     return Amount / Total
 
 }
+
+async function OperatorSubscriptionHandler(data) {
+    console.log("OperatorSubscription==>", data)
+    let i = 0
+    const promises = await data.map(async (x) => {
+        i = i + 1;
+        console.log("x", x)
+        const Record = await SubscriptionModel.aggregate([
+            { $match: { Member: ObjectId(x._id) } },
+            { $lookup: { from: 'products', localField: 'Product', foreignField: '_id', as: 'Product' }, },
+            { $lookup: { from: 'agencies', localField: 'Agency', foreignField: '_id', as: 'Agency' }, },
+            { $lookup: { from: 'members', localField: 'Member', foreignField: '_id', as: 'Member' }, },
+            { $lookup: { from: 'operators', localField: 'Operator', foreignField: '_id', as: 'Operator' }, },
+        ])
+        return {
+
+            Code: i,
+            Label: Record[0].Member[0].FirstName + ' ' + Record[0].Member[0].LastName,
+            TotalSub: x.count,
+            Record: Record
+
+        }
+    })
+
+    let APIResponse = await Promise.all(promises)
+
+
+    return APIResponse
+
+
+}
+
